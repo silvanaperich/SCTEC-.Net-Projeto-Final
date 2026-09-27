@@ -8,6 +8,11 @@ namespace DeskFlow.Api.Models.Entities
         public DateTime DataRegistro { get; set; }
 
         public int ChamadoId { get; set; }
-        public Chamado Chamado { get; set; }
+        public Chamado? Chamado { get; set; }
+
+        public void Atualizar(Interacao interacao)
+        {
+            this.Mensagem = interacao.Mensagem;
+        }
     }
 }
