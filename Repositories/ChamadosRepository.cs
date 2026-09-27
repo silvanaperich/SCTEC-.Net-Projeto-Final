@@ -1,5 +1,6 @@
 using DeskFlow.Api.Data;
 using DeskFlow.Api.Models.Entities;
+using DeskFlow.Api.Models.Enums;
 using DeskFlow.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -45,14 +46,14 @@ namespace DeskFlow.Api.Repositories
         {
             var query = _context.Chamados.AsQueryable();
 
-            if (!status.IsNullOrEmpty())
+            if (Enum.TryParse<StatusChamado>(status, ignoreCase: true, out var statusEnum))
             {
-                query = query.Where(c => c.Status == status);
+                query = query.Where(c => c.Status == statusEnum);
             }
 
-            if (!prioridade.IsNullOrEmpty())
+            if (Enum.TryParse<PrioridadeChamado>(prioridade, ignoreCase: true, out var prioridadeEnum))
             {
-                query = query.Where(c => c.Prioridade == prioridade);
+                query = query.Where(c => c.Prioridade == prioridadeEnum);
             }
 
             if (categoriaId.HasValue)

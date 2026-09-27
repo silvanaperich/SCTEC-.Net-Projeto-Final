@@ -1,5 +1,6 @@
 using DeskFlow.Api.Exceptions;
 using DeskFlow.Api.Models.Entities;
+using DeskFlow.Api.Models.Enums;
 using DeskFlow.Api.Repositories.Interfaces;
 using DeskFlow.Api.Services.Interfaces;
 using Microsoft.IdentityModel.Tokens;
@@ -33,7 +34,7 @@ namespace DeskFlow.Api.Services
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
 
-            if (chamado.Status == "Fechado")
+            if (chamado.Status == StatusChamado.Fechado)
             {
                 throw new RegrasException("Chamado está fechado, não é possível adicionar interações.");
             }
@@ -53,7 +54,7 @@ namespace DeskFlow.Api.Services
         public async Task Cadastrar(Chamado chamado)
         {
             chamado.DataAbertura = DateTime.Now;
-            chamado.Status = "Aberto";
+            chamado.Status = StatusChamado.Aberto;
             await _chamadosRepository.Cadastrar(chamado);
         }
 
@@ -67,7 +68,7 @@ namespace DeskFlow.Api.Services
             }
 
             chamado.Solucao = chamadoAtualizado.Solucao;
-            chamado.Status = "Fechado";
+            chamado.Status = StatusChamado.Fechado;
             chamado.DataFechamento = DateTime.Now;
             await _chamadosRepository.Atualizar(chamado);
         }
@@ -85,7 +86,7 @@ namespace DeskFlow.Api.Services
         public async Task IniciarAtendimento(int id)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
-            chamado.Status = "EmAndamento";
+            chamado.Status = StatusChamado.EmAndamento;
             await _chamadosRepository.Atualizar(chamado);
         }
 

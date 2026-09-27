@@ -49,9 +49,11 @@ namespace DeskFlow.Api.Data
                        .IsRequired();
                 chamado.Property(ch => ch.Prioridade)
                        .HasColumnType("varchar(25)")
+                       .HasConversion<string>()
                        .IsRequired();
                 chamado.Property(ch => ch.Status)
                        .HasColumnType("varchar(25)")
+                       .HasConversion<string>()
                        .IsRequired();
                 chamado.Property(ch => ch.SolicitanteNome)
                        .HasColumnType("varchar(120)")

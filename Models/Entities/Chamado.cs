@@ -1,3 +1,5 @@
+using DeskFlow.Api.Models.Enums;
+
 namespace DeskFlow.Api.Models.Entities
 {
     public class Chamado
@@ -5,8 +7,8 @@ namespace DeskFlow.Api.Models.Entities
         public int Id { get; set; }
         public string Titulo { get; set; }
         public string Descricao { get; set; }
-        public string Prioridade { get; set; }
-        public string Status { get; set; }
+        public PrioridadeChamado Prioridade { get; set; }
+        public StatusChamado Status { get; set; }
         public string SolicitanteNome { get; set; }
         public DateTime DataAbertura { get; set; }
         public DateTime? DataFechamento { get; set; }
@@ -22,7 +24,6 @@ namespace DeskFlow.Api.Models.Entities
             this.Titulo = chamado.Titulo;
             this.Descricao = chamado.Descricao;
             this.Prioridade = chamado.Prioridade;
-            this.Status = chamado.Status;
             this.SolicitanteNome = chamado.SolicitanteNome;
             this.DataAbertura = chamado.DataAbertura;
             this.DataFechamento = chamado.DataFechamento;
