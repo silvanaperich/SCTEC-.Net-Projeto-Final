@@ -1,4 +1,8 @@
 using DeskFlow.Api.Data;
+using DeskFlow.Api.Repositories;
+using DeskFlow.Api.Repositories.Interfaces;
+using DeskFlow.Api.Services;
+using DeskFlow.Api.Services.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -9,6 +13,12 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
+
+builder.Services.AddControllers();
+
+builder.Services.AddScoped<ICategoriasServices, CategoriasServices>();
+
+builder.Services.AddScoped<ICategoriasRespository, CategoriasRepository>();
 
 var app = builder.Build();
 
@@ -23,5 +33,7 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.MapControllers();
 
 app.Run();

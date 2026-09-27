@@ -5,6 +5,11 @@ namespace DeskFlow.Api.Models.Entities
         public int Id { get; set; }
         public string Nome { get; set; }
         
-        public ICollection<Chamado> Chamados {get; set; }
+        public ICollection<Chamado> Chamados {get; set; } = [];
+
+        public void Atualizar(Categoria categoria)
+        {
+            this.Nome = categoria.Nome;
+        }
     }
 }
