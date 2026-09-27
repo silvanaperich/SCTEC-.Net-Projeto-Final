@@ -10,7 +10,7 @@ namespace DeskFlow.Api.Models.Entities
         public string SolicitanteNome { get; set; }
         public DateTime DataAbertura { get; set; }
         public DateTime? DataFechamento { get; set; }
-        public string Solucao { get; set; }
+        public string? Solucao { get; set; }
 
         public int CategoriaId { get; set; }
         public Categoria Categoria { get; set; }
