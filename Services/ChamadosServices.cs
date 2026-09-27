@@ -28,6 +28,8 @@ namespace DeskFlow.Api.Services
 
         public async Task Cadastrar(Chamado chamado)
         {
+            chamado.DataAbertura = DateTime.Now;
+            chamado.Status = "Aberto";
             await _chamadosRepository.Cadastrar(chamado);
         }
 
