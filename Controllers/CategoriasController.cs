@@ -22,7 +22,7 @@ namespace DeskFlow.Api.Controllers
             return Ok(categorias);
         }
 
-        [HttpGet("{id}")]
+        [HttpGet("{id:int}")]
         public async Task<IActionResult> ObterCategoriaPorId([FromRoute] int id)
         {
             Categoria categoria = await _categoriasServices.ObterCategoriaPorId(id);
@@ -36,14 +36,14 @@ namespace DeskFlow.Api.Controllers
             return Created("/categorias", categoria);
         }
 
-        [HttpPut("{id}")]
+        [HttpPut("{id:int}")]
         public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] Categoria categoriaAtualizada)
         {
             await _categoriasServices.Atualizar(id, categoriaAtualizada);
             return Ok();
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete("{id:int}")]
         public async Task<IActionResult> Excluir([FromRoute] int id)
         {
             await _categoriasServices.Excluir(id);
