@@ -17,8 +17,10 @@ builder.Services.AddOpenApi();
 builder.Services.AddControllers();
 
 builder.Services.AddScoped<ICategoriasServices, CategoriasServices>();
+builder.Services.AddScoped<IChamadosServices, ChamadosServices>();
 
 builder.Services.AddScoped<ICategoriasRespository, CategoriasRepository>();
+builder.Services.AddScoped<IChamadosRepository, ChamadosRepository>();
 
 var app = builder.Build();
 
