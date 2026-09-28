@@ -1,6 +1,7 @@
 using DeskFlow.Api.Models.Entities;
 using DeskFlow.Api.Repositories.Interfaces;
 using DeskFlow.Api.Services.Interfaces;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DeskFlow.Api.Services
 {
@@ -33,7 +34,7 @@ namespace DeskFlow.Api.Services
             await _chamadosRepository.Cadastrar(chamado);
         }
 
-        public async Task EncerrarAtendimento(int id)
+        public async Task EncerrarAtendimento(int id, Chamado chamadoAtualizado)
         {
             Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
 
@@ -43,7 +44,15 @@ namespace DeskFlow.Api.Services
                 throw new Exception("Chamado não encontrado");
             }
 
+            if (chamadoAtualizado.Solucao.IsNullOrEmpty())
+            {
+                //todo: criar exception personalizada
+                throw new Exception("Necessário informar a solução para o encerramento do chamado");
+            }
+
+            chamado.Solucao = chamadoAtualizado.Solucao;
             chamado.Status = "Fechado";
+            chamado.DataFechamento = DateTime.Now;
             await _chamadosRepository.Atualizar(chamado);
         }
 

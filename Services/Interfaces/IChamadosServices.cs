@@ -10,6 +10,6 @@ namespace DeskFlow.Api.Services.Interfaces
         Task<Chamado> ObterChamadoPorId(int id);
         Task<List<Chamado>> ObterTodos();
         Task IniciarAtendimento(int id);
-        Task EncerrarAtendimento(int id);
+        Task EncerrarAtendimento(int id, Chamado chamadoAtualizado);
     }
 }
