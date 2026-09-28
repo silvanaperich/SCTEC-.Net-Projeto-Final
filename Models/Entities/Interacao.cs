@@ -1,3 +1,5 @@
+using System.Text.Json.Serialization;
+
 namespace DeskFlow.Api.Models.Entities
 {
     public class Interacao
@@ -8,6 +10,7 @@ namespace DeskFlow.Api.Models.Entities
         public DateTime DataRegistro { get; set; }
 
         public int ChamadoId { get; set; }
+        [JsonIgnore]
         public Chamado? Chamado { get; set; }
 
         public void Atualizar(Interacao interacao)

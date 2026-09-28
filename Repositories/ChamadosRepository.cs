@@ -32,7 +32,13 @@ namespace DeskFlow.Api.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task<Chamado> ObterChamadoPorId(int id) => await _context.Chamados.FindAsync(id);
+        public async Task<Chamado> ObterChamadoPorId(int id)
+        {
+            return await _context.Chamados
+                .Include(c => c.Categoria)
+                .Include(c => c.Interacoes)
+                .FirstOrDefaultAsync(c => c.Id == id);
+        }
 
         public async Task<List<Chamado>> ObterTodos() => await _context.Chamados.ToListAsync();
 
