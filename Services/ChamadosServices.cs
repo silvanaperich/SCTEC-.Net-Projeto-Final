@@ -8,10 +8,33 @@ namespace DeskFlow.Api.Services
     public class ChamadosServices : IChamadosServices
     {
         private IChamadosRepository _chamadosRepository;
+        private IInteracoesRepository _interacoesRepository;
 
-        public ChamadosServices(IChamadosRepository chamadosRepository)
+        public ChamadosServices(IChamadosRepository chamadosRepository, IInteracoesRepository interacoesRepository)
         {
             _chamadosRepository = chamadosRepository;
+            _interacoesRepository = interacoesRepository;
+        }
+
+        public async Task AdicionarInteracao(int id, Interacao interacao)
+        {
+            Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
+            
+            if (chamado == null)
+            {
+                //todo: criar exception personalizada
+                throw new Exception("Chamado não encontrado");
+            }
+
+            if (chamado.Status == "Fechado")
+            {
+                //todo: criar exception personalizada
+                throw new Exception("Chamado está fechado, não é possível adicionar interações.");
+            }
+
+            interacao.ChamadoId = id;
+            interacao.DataRegistro = DateTime.Now;;
+            await _interacoesRepository.Cadastrar(interacao);
         }
 
         public async Task Atualizar(int id, Chamado chamadoAtualizado)

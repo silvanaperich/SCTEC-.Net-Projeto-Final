@@ -50,6 +50,13 @@ namespace DeskFlow.Api.Controllers
             return Ok();
         }
 
+        [HttpPost("{id:int}/interacoes")]
+        public async Task<IActionResult> AdicionarInteracao([FromRoute] int id, [FromBody] Interacao interacao)
+        {
+            await _chamadosServices.AdicionarInteracao(id, interacao);
+            return Ok();
+        }
+
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] Chamado chamadoAtualizado)
         {
