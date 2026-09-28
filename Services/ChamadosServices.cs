@@ -43,6 +43,20 @@ namespace DeskFlow.Api.Services
             }
         }
 
+        public async Task IniciarAtendimento(int id)
+        {
+            Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
+
+            if (chamado == null)
+            {
+                //todo: criar exception personalizada
+                throw new Exception("Chamado não encontrado");
+            }
+
+            chamado.Status = "EmAndamento";
+            await _chamadosRepository.Atualizar(chamado);
+        }
+
         public async Task<Chamado> ObterChamadoPorId(int id) => await _chamadosRepository.ObterChamadoPorId(id);
 
         public async Task<List<Chamado>> ObterTodos() => await _chamadosRepository.ObterTodos();

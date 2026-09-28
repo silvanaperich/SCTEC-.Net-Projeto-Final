@@ -36,6 +36,13 @@ namespace DeskFlow.Api.Controllers
             return Created("/chamados", chamado);
         }
 
+        [HttpPost("{id:int}/iniciar")]
+        public async Task<IActionResult> IniciarAtendimento([FromRoute] int id)
+        {
+            await _chamadosServices.IniciarAtendimento(id);
+            return Ok();
+        }
+
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] Chamado chamadoAtualizado)
         {
