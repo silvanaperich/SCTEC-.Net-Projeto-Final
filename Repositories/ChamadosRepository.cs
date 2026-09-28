@@ -35,5 +35,10 @@ namespace DeskFlow.Api.Repositories
         public async Task<Chamado> ObterChamadoPorId(int id) => await _context.Chamados.FindAsync(id);
 
         public async Task<List<Chamado>> ObterTodos() => await _context.Chamados.ToListAsync();
+
+        public async Task<bool> VerificarExistemChamadosPorCategoriaId(int categoriaId)
+        {
+            return await _context.Chamados.AnyAsync(ch => ch.CategoriaId == categoriaId);
+        }
     }
 }

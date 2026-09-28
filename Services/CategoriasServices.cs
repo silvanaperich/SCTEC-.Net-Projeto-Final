@@ -7,10 +7,12 @@ namespace DeskFlow.Api.Services
     public class CategoriasServices : ICategoriasServices
     {
         private ICategoriasRespository _categoriasRepository;
+        private IChamadosRepository _chamadosRepository;
 
-        public CategoriasServices(ICategoriasRespository categoriasRespository)
+        public CategoriasServices(ICategoriasRespository categoriasRespository, IChamadosRepository chamadosRepository)
         {
             _categoriasRepository = categoriasRespository;
+            _chamadosRepository = chamadosRepository;
         }
         public async Task Atualizar(int id, Categoria categoriaAtualizada)
         {
@@ -36,6 +38,14 @@ namespace DeskFlow.Api.Services
 
             if (categoria != null)
             {
+                bool possuiChamados = await _chamadosRepository.VerificarExistemChamadosPorCategoriaId(id);
+
+                if (possuiChamados)
+                {
+                    //todo: personalizar exceção
+                    throw new Exception("Categoria possui chamados vinculados, não pode ser excluída");
+                }
+
                 await _categoriasRepository.Excluir(categoria);
             }
         }
