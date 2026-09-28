@@ -33,6 +33,20 @@ namespace DeskFlow.Api.Services
             await _chamadosRepository.Cadastrar(chamado);
         }
 
+        public async Task EncerrarAtendimento(int id)
+        {
+            Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
+
+            if (chamado == null)
+            {
+                //todo: criar exception personalizada
+                throw new Exception("Chamado não encontrado");
+            }
+
+            chamado.Status = "Fechado";
+            await _chamadosRepository.Atualizar(chamado);
+        }
+
         public async Task Excluir(int id)
         {
             Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);

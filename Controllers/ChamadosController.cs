@@ -43,6 +43,13 @@ namespace DeskFlow.Api.Controllers
             return Ok();
         }
 
+        [HttpPost("{id:int}/encerrar")]
+        public async Task<IActionResult> EncerrarAtendimento([FromRoute] int id)
+        {
+            await _chamadosServices.EncerrarAtendimento(id);
+            return Ok();
+        }
+
         [HttpPut("{id:int}")]
         public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] Chamado chamadoAtualizado)
         {
