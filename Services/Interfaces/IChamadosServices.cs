@@ -9,5 +9,6 @@ namespace DeskFlow.Api.Services.Interfaces
         Task Excluir(int id);
         Task<Chamado> ObterChamadoPorId(int id);
         Task<List<Chamado>> ObterTodos();
+        Task IniciarAtendimento(int id);
     }
 }
