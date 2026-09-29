@@ -1,3 +1,4 @@
+using DeskFlow.Api.Exceptions;
 using DeskFlow.Api.Models.Entities;
 using DeskFlow.Api.Repositories.Interfaces;
 using DeskFlow.Api.Services.Interfaces;
@@ -41,8 +42,7 @@ namespace DeskFlow.Api.Services
 
                 if (possuiChamados)
                 {
-                    //todo: personalizar exceção
-                    throw new Exception("Categoria possui chamados vinculados, não pode ser excluída");
+                    throw new RegrasException("Categoria possui chamados vinculados, não pode ser excluída.");
                 }
 
                 await _categoriasRepository.Excluir(categoria);

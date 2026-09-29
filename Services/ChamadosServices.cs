@@ -1,3 +1,4 @@
+using DeskFlow.Api.Exceptions;
 using DeskFlow.Api.Models.Entities;
 using DeskFlow.Api.Repositories.Interfaces;
 using DeskFlow.Api.Services.Interfaces;
@@ -27,8 +28,7 @@ namespace DeskFlow.Api.Services
 
             if (chamado.Status == "Fechado")
             {
-                //todo: criar exception personalizada
-                throw new Exception("Chamado está fechado, não é possível adicionar interações.");
+                throw new RegrasException("Chamado está fechado, não é possível adicionar interações.");
             }
 
             interacao.ChamadoId = id;
@@ -66,8 +66,7 @@ namespace DeskFlow.Api.Services
 
             if (chamadoAtualizado.Solucao.IsNullOrEmpty())
             {
-                //todo: criar exception personalizada
-                throw new Exception("Necessário informar a solução para o encerramento do chamado");
+                throw new RegrasException("Necessário informar a solução para o encerramento do chamado.");
             }
 
             chamado.Solucao = chamadoAtualizado.Solucao;

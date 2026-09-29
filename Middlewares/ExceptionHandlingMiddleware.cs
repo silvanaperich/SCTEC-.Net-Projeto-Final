@@ -1,3 +1,4 @@
+using DeskFlow.Api.Exceptions;
 using DeskFlow.Api.Models.DTOs.Erros;
 
 namespace DeskFlow.Api.Middlewares
@@ -16,6 +17,12 @@ namespace DeskFlow.Api.Middlewares
             try
             {
                 await _next(context);
+            }
+            catch (RegrasException ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                var errorResponse = new ErrorResponseDTO(ex.Message);
+                await context.Response.WriteAsJsonAsync(errorResponse);
             }
             catch (KeyNotFoundException ex)
             {
