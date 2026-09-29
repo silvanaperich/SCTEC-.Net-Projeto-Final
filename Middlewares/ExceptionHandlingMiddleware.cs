@@ -17,6 +17,12 @@ namespace DeskFlow.Api.Middlewares
             {
                 await _next(context);
             }
+            catch (KeyNotFoundException ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status404NotFound;
+                var errorResponse = new ErrorResponseDTO(ex.Message);
+                await context.Response.WriteAsJsonAsync(errorResponse);
+            }
             catch (System.Exception)
             {
                 context.Response.StatusCode = StatusCodes.Status500InternalServerError;

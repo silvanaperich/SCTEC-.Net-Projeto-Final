@@ -20,8 +20,7 @@ namespace DeskFlow.Api.Services
 
             if (categoria == null)
             {
-                //todo: criar execption personalisada
-                throw new Exception("Categoria não encontrada");
+                throw new KeyNotFoundException("Categoria não encontrada.");
             }
             categoria.Atualizar(categoriaAtualizada);
             await _categoriasRepository.Atualizar(categoria);

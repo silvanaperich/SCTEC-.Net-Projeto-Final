@@ -22,8 +22,7 @@ namespace DeskFlow.Api.Services
             
             if (chamado == null)
             {
-                //todo: criar exception personalizada
-                throw new Exception("Chamado não encontrado");
+                throw new KeyNotFoundException("Chamado não encontrado");
             }
 
             if (chamado.Status == "Fechado")
@@ -43,8 +42,7 @@ namespace DeskFlow.Api.Services
             
             if (chamado == null)
             {
-                //todo: criar exception personalizada
-                throw new Exception("Chamado não encontrado");
+                throw new KeyNotFoundException("Chamado não encontrado");
             }
             chamado.Atualizar(chamadoAtualizado);
             await _chamadosRepository.Atualizar(chamado);
@@ -63,8 +61,7 @@ namespace DeskFlow.Api.Services
 
             if (chamado == null)
             {
-                //todo: criar exception personalizada
-                throw new Exception("Chamado não encontrado");
+                throw new KeyNotFoundException("Chamado não encontrado");
             }
 
             if (chamadoAtualizado.Solucao.IsNullOrEmpty())
@@ -95,8 +92,7 @@ namespace DeskFlow.Api.Services
 
             if (chamado == null)
             {
-                //todo: criar exception personalizada
-                throw new Exception("Chamado não encontrado");
+                throw new KeyNotFoundException("Chamado não encontrado.");
             }
 
             chamado.Status = "EmAndamento";
