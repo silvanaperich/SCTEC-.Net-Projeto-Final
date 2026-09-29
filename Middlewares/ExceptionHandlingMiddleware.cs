@@ -1,3 +1,5 @@
+using DeskFlow.Api.Models.DTOs.Erros;
+
 namespace DeskFlow.Api.Middlewares
 {
     public class ExceptionHandlingMiddleware
@@ -11,7 +13,16 @@ namespace DeskFlow.Api.Middlewares
 
         public async Task InvokeAsync(HttpContext context)
         {
-            await _next(context);
+            try
+            {
+                await _next(context);
+            }
+            catch (System.Exception)
+            {
+                context.Response.StatusCode = StatusCodes.Status500InternalServerError;
+                var errorResponse = new ErrorResponseDTO("Ocorreu um erro não catalogado, tente novamente ou entre em contato com o suporte técnico.");
+                await context.Response.WriteAsJsonAsync(errorResponse);
+            }
         }
     }
 }
