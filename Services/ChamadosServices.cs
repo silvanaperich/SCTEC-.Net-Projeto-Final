@@ -1,3 +1,4 @@
+using DeskFlow.Api.Exceptions;
 using DeskFlow.Api.Models.Entities;
 using DeskFlow.Api.Repositories.Interfaces;
 using DeskFlow.Api.Services.Interfaces;
@@ -22,14 +23,12 @@ namespace DeskFlow.Api.Services
             
             if (chamado == null)
             {
-                //todo: criar exception personalizada
-                throw new Exception("Chamado não encontrado");
+                throw new KeyNotFoundException("Chamado não encontrado");
             }
 
             if (chamado.Status == "Fechado")
             {
-                //todo: criar exception personalizada
-                throw new Exception("Chamado está fechado, não é possível adicionar interações.");
+                throw new RegrasException("Chamado está fechado, não é possível adicionar interações.");
             }
 
             interacao.ChamadoId = id;
@@ -43,8 +42,7 @@ namespace DeskFlow.Api.Services
             
             if (chamado == null)
             {
-                //todo: criar exception personalizada
-                throw new Exception("Chamado não encontrado");
+                throw new KeyNotFoundException("Chamado não encontrado");
             }
             chamado.Atualizar(chamadoAtualizado);
             await _chamadosRepository.Atualizar(chamado);
@@ -63,14 +61,12 @@ namespace DeskFlow.Api.Services
 
             if (chamado == null)
             {
-                //todo: criar exception personalizada
-                throw new Exception("Chamado não encontrado");
+                throw new KeyNotFoundException("Chamado não encontrado");
             }
 
             if (chamadoAtualizado.Solucao.IsNullOrEmpty())
             {
-                //todo: criar exception personalizada
-                throw new Exception("Necessário informar a solução para o encerramento do chamado");
+                throw new RegrasException("Necessário informar a solução para o encerramento do chamado.");
             }
 
             chamado.Solucao = chamadoAtualizado.Solucao;
@@ -95,8 +91,7 @@ namespace DeskFlow.Api.Services
 
             if (chamado == null)
             {
-                //todo: criar exception personalizada
-                throw new Exception("Chamado não encontrado");
+                throw new KeyNotFoundException("Chamado não encontrado.");
             }
 
             chamado.Status = "EmAndamento";

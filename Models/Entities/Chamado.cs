@@ -28,7 +28,6 @@ namespace DeskFlow.Api.Models.Entities
             this.DataFechamento = chamado.DataFechamento;
             this.Solucao = chamado.Solucao;
             this.CategoriaId = chamado.CategoriaId;
-            //todo: verificar se há mnecessidade de tratar Categoria e/ou Interacoes
         }
     }
 }

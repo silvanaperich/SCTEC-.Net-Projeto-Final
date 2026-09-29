@@ -1,4 +1,5 @@
 using DeskFlow.Api.Data;
+using DeskFlow.Api.Middlewares;
 using DeskFlow.Api.Repositories;
 using DeskFlow.Api.Repositories.Interfaces;
 using DeskFlow.Api.Services;
@@ -29,6 +30,8 @@ builder.Services.AddScoped<IChamadosRepository, ChamadosRepository>();
 builder.Services.AddScoped<IInteracoesRepository, InteracoesRepository>();
 
 var app = builder.Build();
+
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

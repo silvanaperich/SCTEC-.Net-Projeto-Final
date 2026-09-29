@@ -59,3 +59,4 @@ https://localhost:7000/swagger
 - **Controllers**: Recebem as requisições HTTP e definem os Status Codes, chamando a camada Services. 
 - **Services**: Contêm as regras de negócio e validação dos status, chamando a camada Repositories. 
 - **Repositories**: Executam comandos (Inserção, Alteração, Exclusão) e consultas de banco via EF Core. 
+- **Middlewares**: Tratamento de erros globais da API.

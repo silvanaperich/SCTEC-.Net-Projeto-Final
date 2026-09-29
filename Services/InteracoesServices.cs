@@ -19,8 +19,7 @@ namespace DeskFlow.Api.Services
 
             if (interacao == null)
             {
-                //todo: criar exception personalizada
-                throw new Exception("Interacao não encontrada");
+                throw new KeyNotFoundException("Interação não encontrada.");
             }
 
             interacao.Atualizar(interacaoAtualizada);
