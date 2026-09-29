@@ -17,14 +17,21 @@ namespace DeskFlow.Api.Services
             _interacoesRepository = interacoesRepository;
         }
 
-        public async Task AdicionarInteracao(int id, Interacao interacao)
+        private async Task<Chamado> RetornarChamadoPeloId(int id)
         {
             Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
             
             if (chamado == null)
             {
-                throw new KeyNotFoundException("Chamado não encontrado");
+                throw new KeyNotFoundException("Chamado não encontrado.");
             }
+
+            return chamado;
+        }
+
+        public async Task AdicionarInteracao(int id, Interacao interacao)
+        {
+            Chamado chamado = await RetornarChamadoPeloId(id);
 
             if (chamado.Status == "Fechado")
             {
@@ -38,12 +45,7 @@ namespace DeskFlow.Api.Services
 
         public async Task Atualizar(int id, Chamado chamadoAtualizado)
         {
-            Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
-            
-            if (chamado == null)
-            {
-                throw new KeyNotFoundException("Chamado não encontrado");
-            }
+            Chamado chamado = await RetornarChamadoPeloId(id);
             chamado.Atualizar(chamadoAtualizado);
             await _chamadosRepository.Atualizar(chamado);
         }
@@ -57,12 +59,7 @@ namespace DeskFlow.Api.Services
 
         public async Task EncerrarAtendimento(int id, Chamado chamadoAtualizado)
         {
-            Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
-
-            if (chamado == null)
-            {
-                throw new KeyNotFoundException("Chamado não encontrado");
-            }
+            Chamado chamado = await RetornarChamadoPeloId(id);
 
             if (chamadoAtualizado.Solucao.IsNullOrEmpty())
             {
@@ -87,13 +84,7 @@ namespace DeskFlow.Api.Services
 
         public async Task IniciarAtendimento(int id)
         {
-            Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
-
-            if (chamado == null)
-            {
-                throw new KeyNotFoundException("Chamado não encontrado.");
-            }
-
+            Chamado chamado = await RetornarChamadoPeloId(id);
             chamado.Status = "EmAndamento";
             await _chamadosRepository.Atualizar(chamado);
         }
