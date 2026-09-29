@@ -2,6 +2,7 @@ using DeskFlow.Api.Data;
 using DeskFlow.Api.Models.Entities;
 using DeskFlow.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 
 namespace DeskFlow.Api.Repositories
 {
@@ -40,7 +41,30 @@ namespace DeskFlow.Api.Repositories
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<List<Chamado>> ObterTodos() => await _context.Chamados.ToListAsync();
+        public async Task<List<Chamado>> ObterChamados(string status, string prioridade, int? categoriaId)
+        {
+            var query = _context.Chamados.AsQueryable();
+
+            if (!status.IsNullOrEmpty())
+            {
+                query = query.Where(c => c.Status == status);
+            }
+
+            if (!prioridade.IsNullOrEmpty())
+            {
+                query = query.Where(c => c.Prioridade == prioridade);
+            }
+
+            if (categoriaId.HasValue)
+            {
+                query = query.Where(c => c.CategoriaId == categoriaId);
+            }
+
+            return await query
+                .Include(c => c.Categoria)
+                .Include(c => c.Interacoes)
+                .ToListAsync();   
+        }
 
         public async Task<bool> VerificarExistemChamadosPorCategoriaId(int categoriaId)
         {

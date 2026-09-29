@@ -16,9 +16,9 @@ namespace DeskFlow.Api.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ObterTodos()
+        public async Task<IActionResult> ObterChamados([FromQuery] string? status, [FromQuery] string? prioridade, [FromQuery] int? categoriaId)
         {
-            List<Chamado> chamados = await _chamadosServices.ObterTodos();
+            List<Chamado> chamados = await _chamadosServices.ObterChamados(status, prioridade, categoriaId);
             return Ok(chamados);
         }
 

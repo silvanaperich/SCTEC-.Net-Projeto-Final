@@ -105,6 +105,7 @@ namespace DeskFlow.Api.Services
 
         public async Task<Chamado> ObterChamadoPorId(int id) => await _chamadosRepository.ObterChamadoPorId(id);
 
-        public async Task<List<Chamado>> ObterTodos() => await _chamadosRepository.ObterTodos();
+        public async Task<List<Chamado>> ObterChamados(string status, string prioridade, int? categoriaId) => 
+            await _chamadosRepository.ObterChamados(status, prioridade, categoriaId);
     }
 }
