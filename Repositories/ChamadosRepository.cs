@@ -1,5 +1,6 @@
 using DeskFlow.Api.Data;
 using DeskFlow.Api.Models.Entities;
+using DeskFlow.Api.Models.Enums;
 using DeskFlow.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -41,18 +42,18 @@ namespace DeskFlow.Api.Repositories
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<List<Chamado>> ObterChamados(string status, string prioridade, int? categoriaId)
+        public async Task<List<Chamado>> ObterChamados(StatusChamado? status, PrioridadeChamado? prioridade, int? categoriaId)
         {
             var query = _context.Chamados.AsQueryable();
 
-            if (!status.IsNullOrEmpty())
-            {
-                query = query.Where(c => c.Status == status);
+            if (status.HasValue)
+            {          
+                query = query.Where(c => c.Status == status.Value);
             }
 
-            if (!prioridade.IsNullOrEmpty())
-            {
-                query = query.Where(c => c.Prioridade == prioridade);
+            if (prioridade.HasValue)
+            {     
+                query = query.Where(c => c.Prioridade == prioridade.Value);
             }
 
             if (categoriaId.HasValue)
