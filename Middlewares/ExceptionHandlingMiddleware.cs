@@ -24,6 +24,12 @@ namespace DeskFlow.Api.Middlewares
                 var errorResponse = new ErrorResponseDTO(ex.Message);
                 await context.Response.WriteAsJsonAsync(errorResponse);
             }
+            catch (ArgumentException ex)
+            {
+                context.Response.StatusCode = StatusCodes.Status400BadRequest;
+                var errorResponse = new ErrorResponseDTO(ex.Message);
+                await context.Response.WriteAsJsonAsync(errorResponse);
+            }
             catch (KeyNotFoundException ex)
             {
                 context.Response.StatusCode = StatusCodes.Status404NotFound;

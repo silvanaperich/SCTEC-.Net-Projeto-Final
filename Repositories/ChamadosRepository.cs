@@ -46,13 +46,21 @@ namespace DeskFlow.Api.Repositories
         {
             var query = _context.Chamados.AsQueryable();
 
-            if (Enum.TryParse<StatusChamado>(status, ignoreCase: true, out var statusEnum))
+            if (!status.IsNullOrEmpty())
             {
+                if (!Enum.TryParse<StatusChamado>(status, ignoreCase: true, out var statusEnum))
+                {
+                    throw new ArgumentException($"Status '{status}' inválido.");
+                }                
                 query = query.Where(c => c.Status == statusEnum);
             }
 
-            if (Enum.TryParse<PrioridadeChamado>(prioridade, ignoreCase: true, out var prioridadeEnum))
+            if (!prioridade.IsNullOrEmpty())
             {
+                if (!Enum.TryParse<PrioridadeChamado>(prioridade, ignoreCase: true, out var prioridadeEnum))
+                {
+                    throw new ArgumentException($"Prioridade '{prioridade}' inválido.");
+                }          
                 query = query.Where(c => c.Prioridade == prioridadeEnum);
             }
 
