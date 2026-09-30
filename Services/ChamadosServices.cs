@@ -92,7 +92,30 @@ namespace DeskFlow.Api.Services
 
         public async Task<Chamado> ObterChamadoPorId(int id) => await _chamadosRepository.ObterChamadoPorId(id);
 
-        public async Task<List<Chamado>> ObterChamados(string status, string prioridade, int? categoriaId) => 
-            await _chamadosRepository.ObterChamados(status, prioridade, categoriaId);
+        public async Task<List<Chamado>> ObterChamados(string status, string prioridade, int? categoriaId)
+        {
+            StatusChamado? statusEnum = null;
+            PrioridadeChamado? prioridadeEnum = null;
+
+            if (!status.IsNullOrEmpty())
+            {
+                if (!Enum.TryParse<StatusChamado>(status, ignoreCase: true, out var statusEnumChecado))
+                {
+                    throw new ArgumentException($"Status '{status}' inválido.");
+                }       
+                statusEnum = statusEnumChecado;         
+            }
+
+            if (!prioridade.IsNullOrEmpty())
+            {
+                if (!Enum.TryParse<PrioridadeChamado>(prioridade, ignoreCase: true, out var prioridadeEnumChecado))
+                {
+                    throw new ArgumentException($"Prioridade '{prioridade}' inválido.");
+                }       
+                prioridadeEnum = prioridadeEnumChecado;   
+            }
+
+            return await _chamadosRepository.ObterChamados(statusEnum, prioridadeEnum, categoriaId);            
+        }
     }
 }

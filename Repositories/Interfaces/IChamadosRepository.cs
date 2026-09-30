@@ -1,4 +1,5 @@
 using DeskFlow.Api.Models.Entities;
+using DeskFlow.Api.Models.Enums;
 
 namespace DeskFlow.Api.Repositories.Interfaces
 {
@@ -8,7 +9,7 @@ namespace DeskFlow.Api.Repositories.Interfaces
         Task Atualizar(Chamado chamado);
         Task Excluir(Chamado chamado);
         Task<Chamado> ObterChamadoPorId(int id);
-        Task<List<Chamado>> ObterChamados(string status, string prioridade, int? categoriaId);
+        Task<List<Chamado>> ObterChamados(StatusChamado? status, PrioridadeChamado? prioridade, int? categoriaId);
         Task<bool> VerificarExistemChamadosPorCategoriaId(int categoriaId);
     }
 }

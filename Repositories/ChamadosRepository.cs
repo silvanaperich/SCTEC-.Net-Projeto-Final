@@ -42,26 +42,18 @@ namespace DeskFlow.Api.Repositories
                 .FirstOrDefaultAsync(c => c.Id == id);
         }
 
-        public async Task<List<Chamado>> ObterChamados(string status, string prioridade, int? categoriaId)
+        public async Task<List<Chamado>> ObterChamados(StatusChamado? status, PrioridadeChamado? prioridade, int? categoriaId)
         {
             var query = _context.Chamados.AsQueryable();
 
-            if (!status.IsNullOrEmpty())
-            {
-                if (!Enum.TryParse<StatusChamado>(status, ignoreCase: true, out var statusEnum))
-                {
-                    throw new ArgumentException($"Status '{status}' inválido.");
-                }                
-                query = query.Where(c => c.Status == statusEnum);
+            if (status.HasValue)
+            {          
+                query = query.Where(c => c.Status == status.Value);
             }
 
-            if (!prioridade.IsNullOrEmpty())
-            {
-                if (!Enum.TryParse<PrioridadeChamado>(prioridade, ignoreCase: true, out var prioridadeEnum))
-                {
-                    throw new ArgumentException($"Prioridade '{prioridade}' inválido.");
-                }          
-                query = query.Where(c => c.Prioridade == prioridadeEnum);
+            if (prioridade.HasValue)
+            {     
+                query = query.Where(c => c.Prioridade == prioridade.Value);
             }
 
             if (categoriaId.HasValue)
