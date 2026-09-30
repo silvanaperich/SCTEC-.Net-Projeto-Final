@@ -16,7 +16,7 @@ namespace DeskFlow.Api.Models.Entities
 
         public int CategoriaId { get; set; }
         public Categoria? Categoria { get; set; }
-        
+
         public List<Interacao> Interacoes { get; set; } = [];
 
         public void Atualizar(Chamado chamado)

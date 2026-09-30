@@ -21,7 +21,7 @@ namespace DeskFlow.Api.Services
         private async Task<Chamado> RetornarChamadoPeloId(int id)
         {
             Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
-            
+
             if (chamado == null)
             {
                 throw new KeyNotFoundException("Chamado não encontrado.");
@@ -76,10 +76,10 @@ namespace DeskFlow.Api.Services
         public async Task Excluir(int id)
         {
             Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
-            
+
             if (chamado != null)
             {
-                await _chamadosRepository.Excluir(chamado);   
+                await _chamadosRepository.Excluir(chamado);
             }
         }
 
@@ -102,8 +102,8 @@ namespace DeskFlow.Api.Services
                 if (!Enum.TryParse<StatusChamado>(status, ignoreCase: true, out var statusEnumChecado))
                 {
                     throw new ArgumentException($"Status '{status}' inválido.");
-                }       
-                statusEnum = statusEnumChecado;         
+                }
+                statusEnum = statusEnumChecado;
             }
 
             if (!prioridade.IsNullOrEmpty())
@@ -111,11 +111,11 @@ namespace DeskFlow.Api.Services
                 if (!Enum.TryParse<PrioridadeChamado>(prioridade, ignoreCase: true, out var prioridadeEnumChecado))
                 {
                     throw new ArgumentException($"Prioridade '{prioridade}' inválido.");
-                }       
-                prioridadeEnum = prioridadeEnumChecado;   
+                }
+                prioridadeEnum = prioridadeEnumChecado;
             }
 
-            return await _chamadosRepository.ObterChamados(statusEnum, prioridadeEnum, categoriaId);            
+            return await _chamadosRepository.ObterChamados(statusEnum, prioridadeEnum, categoriaId);
         }
     }
 }

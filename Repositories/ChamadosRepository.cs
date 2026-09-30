@@ -47,12 +47,12 @@ namespace DeskFlow.Api.Repositories
             var query = _context.Chamados.AsQueryable();
 
             if (status.HasValue)
-            {          
+            {
                 query = query.Where(c => c.Status == status.Value);
             }
 
             if (prioridade.HasValue)
-            {     
+            {
                 query = query.Where(c => c.Prioridade == prioridade.Value);
             }
 
@@ -64,7 +64,7 @@ namespace DeskFlow.Api.Repositories
             return await query
                 .Include(c => c.Categoria)
                 .Include(c => c.Interacoes)
-                .ToListAsync();   
+                .ToListAsync();
         }
 
         public async Task<bool> VerificarExistemChamadosPorCategoriaId(int categoriaId)

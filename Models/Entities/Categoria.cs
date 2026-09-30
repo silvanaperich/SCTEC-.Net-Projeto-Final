@@ -6,7 +6,7 @@ namespace DeskFlow.Api.Models.Entities
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        
+
         [JsonIgnore]
         public ICollection<Chamado> Chamados {get; set; } = [];
 

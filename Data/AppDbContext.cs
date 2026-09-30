@@ -7,7 +7,7 @@ namespace DeskFlow.Api.Data
     {
         public AppDbContext(DbContextOptions options) : base(options)
         {
-            
+
         }
 
         public DbSet<Categoria> Categorias => Set<Categoria>();
@@ -27,7 +27,7 @@ namespace DeskFlow.Api.Data
             {
                 ch.HasMany(ch => ch.Interacoes)
                   .WithOne(i => i.Chamado)
-                  .HasForeignKey(i => i.ChamadoId);    
+                  .HasForeignKey(i => i.ChamadoId);
             });
 
             base.OnModelCreating(modelBuilder);
