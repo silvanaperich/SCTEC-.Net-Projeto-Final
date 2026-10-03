@@ -9,6 +9,7 @@ O sistema automatiza o gerenciamento de chamados de suporte técnico, histórico
 - Entity Framework Core 10 
 - SQL Server 
 - Swagger / OpenAPI
+- ASP.NET Core Identity
 
 ##  Como Executar a Aplicação 
 
@@ -50,6 +51,24 @@ dotnet run
 https://localhost:7000/swagger 
 ````
 
+## Autenticação
+
+1. Efetue o registro email e senha para o login no endpoint:
+````
+/auth/register
+````
+
+2. Efetue o login no endpoint:
+````
+/auth/login
+````
+
+3. Copie o token do atributo `accessToken`;
+
+4. Clique no botão `Authorize`, cole o token e clique em 'Authorize' para confirmar e feche a janela de autorização.
+
+5. Pronto, agora poderá consumir os endpoints da API.
+
 ##  Ciclo de Vida do Chamado 
 - **Aberto**: Chamado registrado pelo solicitante com a descrição do cenário para atendimento. 
 - **EmAndamento**: Chamado em análise ou em processamento da ação necessária. 
@@ -60,3 +79,6 @@ https://localhost:7000/swagger
 - **Services**: Contêm as regras de negócio e validação dos status, chamando a camada Repositories. 
 - **Repositories**: Executam comandos (Inserção, Alteração, Exclusão) e consultas de banco via EF Core. 
 - **Middlewares**: Tratamento de erros globais da API.
+
+##  Segurança e Autenticação
+- **ASP.NET Core Identity**: validação de Tokens JWT. 
