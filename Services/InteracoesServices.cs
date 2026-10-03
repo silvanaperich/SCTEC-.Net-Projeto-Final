@@ -23,8 +23,9 @@ namespace DeskFlow.Api.Services
                 throw new KeyNotFoundException("Interação não encontrada.");
             }
 
-            interacao.Autor = interacaoCreateDTO.Autor;
-            interacao.Mensagem = interacaoCreateDTO.Mensagem;
+            interacao.Atualizar(
+                interacaoCreateDTO.Autor,
+                interacaoCreateDTO.Mensagem);
             await _interacoesRepository.Atualizar(interacao);
         }
 

@@ -55,14 +55,12 @@ namespace DeskFlow.Api.Services
         public async Task Atualizar(int id, ChamadoCreateDTO chamadoCreateDTO)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
-            //chamado.Atualizar(chamadoAtualizado);
-            chamado.Titulo = chamadoCreateDTO.Titulo;
-            chamado.Descricao = chamadoCreateDTO.Descricao;
-            chamado.Prioridade = chamadoCreateDTO.Prioridade;
-            chamado.SolicitanteNome = chamadoCreateDTO.SolicitanteNome;
-            chamado.CategoriaId = chamadoCreateDTO.CategoriaId;
-            chamado.DataAbertura = DateTime.Now;
-            chamado.Status = StatusChamado.Aberto;
+            chamado.Atualizar(
+                chamadoCreateDTO.Titulo, 
+                chamadoCreateDTO.Descricao,
+                chamadoCreateDTO.Prioridade,
+                chamadoCreateDTO.SolicitanteNome,
+                chamadoCreateDTO.CategoriaId);
             await _chamadosRepository.Atualizar(chamado);
         }
 

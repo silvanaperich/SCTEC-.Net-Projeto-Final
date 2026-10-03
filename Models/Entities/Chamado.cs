@@ -19,16 +19,15 @@ namespace DeskFlow.Api.Models.Entities
 
         public List<Interacao> Interacoes { get; set; } = [];
 
-        public void Atualizar(Chamado chamado)
+        public void Atualizar(string titulo, string descricao, PrioridadeChamado prioridade, string solicitanteNome, int categoriaId)
         {
-            this.Titulo = chamado.Titulo;
-            this.Descricao = chamado.Descricao;
-            this.Prioridade = chamado.Prioridade;
-            this.SolicitanteNome = chamado.SolicitanteNome;
-            this.DataAbertura = chamado.DataAbertura;
-            this.DataFechamento = chamado.DataFechamento;
-            this.Solucao = chamado.Solucao;
-            this.CategoriaId = chamado.CategoriaId;
+            this.Titulo = titulo;
+            this.Descricao = descricao;
+            this.Prioridade = prioridade;
+            this.SolicitanteNome = solicitanteNome;
+            this.CategoriaId = categoriaId;
+            this.DataAbertura = DateTime.Now;
+            this.Status = StatusChamado.Aberto;
         }
     }
 }
