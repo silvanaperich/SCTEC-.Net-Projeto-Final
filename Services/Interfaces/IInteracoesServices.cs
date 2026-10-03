@@ -1,13 +1,13 @@
-using DeskFlow.Api.Models.Entities;
+using DeskFlow.Api.DTOs.Interacoes;
 
 namespace DeskFlow.Api.Services.Interfaces
 {
     public interface IInteracoesServices
     {
-        Task Cadastrar(Interacao interacao);
-        Task Atualizar(int id, Interacao interacaoAtualizada);
+        Task Cadastrar(InteracaoComChamadoIdCreateDTO interacaoComChamadoIdCreateDTO);
+        Task Atualizar(int id, InteracaoCreateDTO interacaoCreateDTO);
         Task Excluir(int id);
-        Task<Interacao> ObterInteracaoPorId(int id);
-        Task<List<Interacao>> ObterTodas();
+        Task<InteracaoComChamadoIdResponseDTO> ObterInteracaoPorId(int id);
+        Task<List<InteracaoComChamadoIdResponseDTO>> ObterTodas();
     }
 }
