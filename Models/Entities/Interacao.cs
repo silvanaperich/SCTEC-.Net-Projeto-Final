@@ -13,9 +13,10 @@ namespace DeskFlow.Api.Models.Entities
         [JsonIgnore]
         public Chamado? Chamado { get; set; }
 
-        public void Atualizar(Interacao interacao)
+        public void Atualizar(string autor, string mensagem)
         {
-            this.Mensagem = interacao.Mensagem;
+            this.Autor = autor;
+            this.Mensagem = mensagem;
         }
     }
 }

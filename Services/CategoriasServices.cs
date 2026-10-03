@@ -24,8 +24,7 @@ namespace DeskFlow.Api.Services
             {
                 throw new KeyNotFoundException("Categoria não encontrada.");
             }
-            Categoria categoriaAtualizada = new Categoria {Nome = categoriaCreateDTO.Nome};
-            categoria.Atualizar(categoriaAtualizada);
+            categoria.Atualizar(categoriaCreateDTO.Nome);
             await _categoriasRepository.Atualizar(categoria);
         }
 

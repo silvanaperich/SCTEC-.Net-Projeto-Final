@@ -10,9 +10,9 @@ namespace DeskFlow.Api.Models.Entities
         [JsonIgnore]
         public ICollection<Chamado> Chamados {get; set; } = [];
 
-        public void Atualizar(Categoria categoria)
+        public void Atualizar(string nome)
         {
-            this.Nome = categoria.Nome;
+            this.Nome = nome;
         }
     }
 }
