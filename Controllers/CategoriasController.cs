@@ -1,4 +1,4 @@
-using DeskFlow.Api.Models.Entities;
+using DeskFlow.Api.DTOs.Categorias;
 using DeskFlow.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,28 +18,28 @@ namespace DeskFlow.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> ObterTodas()
         {
-            List<Categoria> categorias = await _categoriasServices.ObterTodas();
-            return Ok(categorias);
+            List<CategoriaResponseDTO> categoriaResponseDTOs = await _categoriasServices.ObterTodas();
+            return Ok(categoriaResponseDTOs);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> ObterCategoriaPorId([FromRoute] int id)
         {
-            Categoria categoria = await _categoriasServices.ObterCategoriaPorId(id);
-            return Ok(categoria);
+            CategoriaResponseDTO categoriaResponseDTO = await _categoriasServices.ObterCategoriaPorId(id);
+            return Ok(categoriaResponseDTO);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Cadastrar([FromBody] Categoria categoria)
+        public async Task<IActionResult> Cadastrar([FromBody] CategoriaCreateDTO categoriaCreateDTO)
         {
-            await _categoriasServices.Cadastrar(categoria);
-            return Created("/categorias", categoria);
+            await _categoriasServices.Cadastrar(categoriaCreateDTO);
+            return Created("/categorias", categoriaCreateDTO);
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] Categoria categoriaAtualizada)
+        public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] CategoriaCreateDTO categoriaCreateDTO)
         {
-            await _categoriasServices.Atualizar(id, categoriaAtualizada);
+            await _categoriasServices.Atualizar(id, categoriaCreateDTO);
             return Ok();
         }
 

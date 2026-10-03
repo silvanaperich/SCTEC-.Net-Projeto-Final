@@ -1,3 +1,4 @@
+using DeskFlow.Api.DTOs.Categorias;
 using DeskFlow.Api.Exceptions;
 using DeskFlow.Api.Models.Entities;
 using DeskFlow.Api.Repositories.Interfaces;
@@ -15,7 +16,7 @@ namespace DeskFlow.Api.Services
             _categoriasRepository = categoriasRespository;
             _chamadosRepository = chamadosRepository;
         }
-        public async Task Atualizar(int id, Categoria categoriaAtualizada)
+        public async Task Atualizar(int id, CategoriaCreateDTO categoriaCreateDTO)
         {
             Categoria categoria = await _categoriasRepository.ObterCategoriaPorId(id);
 
@@ -23,12 +24,14 @@ namespace DeskFlow.Api.Services
             {
                 throw new KeyNotFoundException("Categoria não encontrada.");
             }
+            Categoria categoriaAtualizada = new Categoria {Nome = categoriaCreateDTO.Nome};
             categoria.Atualizar(categoriaAtualizada);
             await _categoriasRepository.Atualizar(categoria);
         }
 
-        public async Task Cadastrar(Categoria categoria)
+        public async Task Cadastrar(CategoriaCreateDTO categoriaCreateDTO)
         {
+            Categoria categoria = new Categoria {Nome = categoriaCreateDTO.Nome};
             await _categoriasRepository.Cadastrar(categoria);
         }
 
@@ -49,7 +52,31 @@ namespace DeskFlow.Api.Services
             }
         }
 
-        public async Task<Categoria> ObterCategoriaPorId(int id) => await _categoriasRepository.ObterCategoriaPorId(id);
-        public async Task<List<Categoria>> ObterTodas() => await _categoriasRepository.ObterTodas();
+        public async Task<CategoriaResponseDTO> ObterCategoriaPorId(int id)
+        {
+            Categoria categoria = await _categoriasRepository.ObterCategoriaPorId(id);
+
+            if (categoria == null)
+            {
+                return null;
+            }
+
+            return new CategoriaResponseDTO
+            {
+                Id = categoria.Id, 
+                Nome = categoria.Nome
+            };
+        }
+
+        public async Task<List<CategoriaResponseDTO>> ObterTodas()
+        {
+           List<Categoria> categorias = await _categoriasRepository.ObterTodas();
+
+           return categorias.Select(c => new CategoriaResponseDTO
+            {
+                Id = c.Id, 
+                Nome = c.Nome
+            }).ToList();
+        }
     }
 }
