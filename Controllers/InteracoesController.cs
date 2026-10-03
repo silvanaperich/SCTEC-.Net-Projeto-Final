@@ -1,4 +1,4 @@
-using DeskFlow.Api.Models.Entities;
+using DeskFlow.Api.DTOs.Interacoes;
 using DeskFlow.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,28 +18,28 @@ namespace DeskFlow.Api.Controllers
         [HttpGet]
         public async Task<IActionResult> ObterTodas()
         {
-            List<Interacao> interacoes = await _interacoesServices.ObterTodas();
-            return Ok(interacoes);
+            List<InteracaoComChamadoIdResponseDTO> interacaoComChamadoIdResponseDTOs = await _interacoesServices.ObterTodas();
+            return Ok(interacaoComChamadoIdResponseDTOs);
         }
 
         [HttpGet("{id:int}")]
         public async Task<IActionResult> ObterInteracaoPorId([FromRoute] int id)
         {
-            Interacao interacao = await _interacoesServices.ObterInteracaoPorId(id);
-            return Ok(interacao);
+            InteracaoComChamadoIdResponseDTO interacaoComChamadoIdResponseDTO = await _interacoesServices.ObterInteracaoPorId(id);
+            return Ok(interacaoComChamadoIdResponseDTO);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Cadastrar([FromBody] Interacao interacao)
+        public async Task<IActionResult> Cadastrar([FromBody] InteracaoComChamadoIdCreateDTO interacaoComChamadoIdCreateDTO)
         {
-            await _interacoesServices.Cadastrar(interacao);
-            return Created("/interacoes", interacao);
+            await _interacoesServices.Cadastrar(interacaoComChamadoIdCreateDTO);
+            return Created("/interacoes", interacaoComChamadoIdCreateDTO);
         }
 
         [HttpPut("{id:int}")]
-        public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] Interacao interacaoAtualizada)
+        public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] InteracaoCreateDTO interacaoCreateDTO)
         {
-            await _interacoesServices.Atualizar(id, interacaoAtualizada);
+            await _interacoesServices.Atualizar(id, interacaoCreateDTO);
             return Ok();
         }
 

@@ -1,3 +1,6 @@
+using DeskFlow.Api.DTOs.Categorias;
+using DeskFlow.Api.DTOs.Chamados;
+using DeskFlow.Api.DTOs.Interacoes;
 using DeskFlow.Api.Exceptions;
 using DeskFlow.Api.Models.Entities;
 using DeskFlow.Api.Models.Enums;
@@ -30,7 +33,7 @@ namespace DeskFlow.Api.Services
             return chamado;
         }
 
-        public async Task AdicionarInteracao(int id, Interacao interacao)
+        public async Task AdicionarInteracao(int id, InteracaoCreateDTO interacaoCreateDTO)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
 
@@ -39,35 +42,55 @@ namespace DeskFlow.Api.Services
                 throw new RegrasException("Chamado está fechado, não é possível adicionar interações.");
             }
 
-            interacao.ChamadoId = id;
-            interacao.DataRegistro = DateTime.Now;;
+            Interacao interacao = new Interacao
+            {
+                ChamadoId = id,
+                DataRegistro = DateTime.Now,
+                Autor = interacaoCreateDTO.Autor,
+                Mensagem = interacaoCreateDTO.Mensagem
+            };
             await _interacoesRepository.Cadastrar(interacao);
         }
 
-        public async Task Atualizar(int id, Chamado chamadoAtualizado)
+        public async Task Atualizar(int id, ChamadoCreateDTO chamadoCreateDTO)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
-            chamado.Atualizar(chamadoAtualizado);
+            //chamado.Atualizar(chamadoAtualizado);
+            chamado.Titulo = chamadoCreateDTO.Titulo;
+            chamado.Descricao = chamadoCreateDTO.Descricao;
+            chamado.Prioridade = chamadoCreateDTO.Prioridade;
+            chamado.SolicitanteNome = chamadoCreateDTO.SolicitanteNome;
+            chamado.CategoriaId = chamadoCreateDTO.CategoriaId;
+            chamado.DataAbertura = DateTime.Now;
+            chamado.Status = StatusChamado.Aberto;
             await _chamadosRepository.Atualizar(chamado);
         }
 
-        public async Task Cadastrar(Chamado chamado)
+        public async Task Cadastrar(ChamadoCreateDTO chamadoCreateDTO)
         {
-            chamado.DataAbertura = DateTime.Now;
-            chamado.Status = StatusChamado.Aberto;
+            Chamado chamado = new Chamado
+            {
+                Titulo = chamadoCreateDTO.Titulo,
+                Descricao = chamadoCreateDTO.Descricao,
+                Prioridade = chamadoCreateDTO.Prioridade,
+                SolicitanteNome = chamadoCreateDTO.SolicitanteNome,
+                CategoriaId = chamadoCreateDTO.CategoriaId,
+                DataAbertura = DateTime.Now,
+                Status = StatusChamado.Aberto
+            };
             await _chamadosRepository.Cadastrar(chamado);
         }
 
-        public async Task EncerrarAtendimento(int id, Chamado chamadoAtualizado)
+        public async Task EncerrarAtendimento(int id, ChamadoEncerradoUpdateDTO chamadoEncerradoUpdateDTO)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
 
-            if (chamadoAtualizado.Solucao.IsNullOrEmpty())
+            if (chamadoEncerradoUpdateDTO.Solucao.IsNullOrEmpty())
             {
                 throw new RegrasException("Necessário informar a solução para o encerramento do chamado.");
             }
 
-            chamado.Solucao = chamadoAtualizado.Solucao;
+            chamado.Solucao = chamadoEncerradoUpdateDTO.Solucao;
             chamado.Status = StatusChamado.Fechado;
             chamado.DataFechamento = DateTime.Now;
             await _chamadosRepository.Atualizar(chamado);
@@ -90,9 +113,43 @@ namespace DeskFlow.Api.Services
             await _chamadosRepository.Atualizar(chamado);
         }
 
-        public async Task<Chamado> ObterChamadoPorId(int id) => await _chamadosRepository.ObterChamadoPorId(id);
+        public async Task<ChamadoResponseDTO> ObterChamadoPorId(int id)
+        {
+            Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
 
-        public async Task<List<Chamado>> ObterChamados(string status, string prioridade, int? categoriaId)
+            if (chamado == null)
+            {
+                return null;
+            }
+
+            return new ChamadoResponseDTO
+            {
+                Id = chamado.Id,
+                Titulo = chamado.Titulo,
+                Descricao = chamado.Descricao,
+                Prioridade = chamado.Prioridade,
+                Status = chamado.Status,
+                SolicitanteNome = chamado.SolicitanteNome,
+                DataAbertura = chamado.DataAbertura,
+                DataFechamento = chamado.DataFechamento,
+                Solucao = chamado.Solucao,
+                CategoriaId = chamado.CategoriaId,
+                Categoria = new CategoriaResponseDTO
+                {
+                    Id = chamado.Categoria.Id,
+                    Nome = chamado.Categoria.Nome
+                },
+                Interacoes = chamado.Interacoes.Select(i => new InteracaoResponseDTO
+                {
+                    Id = i.Id,
+                    Autor = i.Autor,
+                    Mensagem = i.Mensagem,
+                    DataRegistro = i.DataRegistro
+                }).ToList()
+            };
+        }
+
+        public async Task<List<ChamadoResponseDTO>> ObterChamados(string status, string prioridade, int? categoriaId)
         {
             StatusChamado? statusEnum = null;
             PrioridadeChamado? prioridadeEnum = null;
@@ -115,7 +172,33 @@ namespace DeskFlow.Api.Services
                 prioridadeEnum = prioridadeEnumChecado;
             }
 
-            return await _chamadosRepository.ObterChamados(statusEnum, prioridadeEnum, categoriaId);
+            List<Chamado> chamados = await _chamadosRepository.ObterChamados(statusEnum, prioridadeEnum, categoriaId);
+
+            return chamados.Select( ch => new ChamadoResponseDTO
+            {
+                Id = ch.Id,
+                Titulo = ch.Titulo,
+                Descricao = ch.Descricao,
+                Prioridade = ch.Prioridade,
+                Status = ch.Status,
+                SolicitanteNome = ch.SolicitanteNome,
+                DataAbertura = ch.DataAbertura,
+                DataFechamento = ch.DataFechamento,
+                Solucao = ch.Solucao,
+                CategoriaId = ch.CategoriaId,
+                Categoria = new CategoriaResponseDTO
+                {
+                    Id = ch.Categoria.Id,
+                    Nome = ch.Categoria.Nome
+                },
+                Interacoes = ch.Interacoes.Select(i => new InteracaoResponseDTO
+                {
+                    Id = i.Id,
+                    Autor = i.Autor,
+                    Mensagem = i.Mensagem,
+                    DataRegistro = i.DataRegistro
+                }).ToList()
+            }).ToList();
         }
     }
 }
