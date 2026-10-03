@@ -1,9 +1,11 @@
 using DeskFlow.Api.DTOs.Interacoes;
 using DeskFlow.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace DeskFlow.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("interacoes")]
     public class InteracoesController : ControllerBase
