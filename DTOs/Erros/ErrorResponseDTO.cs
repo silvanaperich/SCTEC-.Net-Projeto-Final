@@ -1,4 +1,4 @@
-namespace DeskFlow.Api.Models.DTOs.Erros
+namespace DeskFlow.Api.DTOs.Erros
 {
     public class ErrorResponseDTO(string message)
     {

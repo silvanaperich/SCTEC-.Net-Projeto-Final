@@ -1,5 +1,5 @@
 using DeskFlow.Api.Exceptions;
-using DeskFlow.Api.Models.DTOs.Erros;
+using DeskFlow.Api.DTOs.Erros;
 
 namespace DeskFlow.Api.Middlewares
 {
