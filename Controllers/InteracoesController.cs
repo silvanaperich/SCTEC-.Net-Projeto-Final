@@ -42,7 +42,7 @@ namespace DeskFlow.Api.Controllers
         public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] InteracaoCreateDTO interacaoCreateDTO)
         {
             await _interacoesServices.Atualizar(id, interacaoCreateDTO);
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]

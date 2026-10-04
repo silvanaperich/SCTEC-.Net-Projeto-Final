@@ -42,7 +42,7 @@ namespace DeskFlow.Api.Controllers
         public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] CategoriaCreateDTO categoriaCreateDTO)
         {
             await _categoriasServices.Atualizar(id, categoriaCreateDTO);
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]

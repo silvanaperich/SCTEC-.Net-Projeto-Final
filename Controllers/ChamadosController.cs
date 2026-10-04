@@ -64,7 +64,7 @@ namespace DeskFlow.Api.Controllers
         public async Task<IActionResult> Atualizar([FromRoute] int id, [FromBody] ChamadoCreateDTO chamadoCreateDTO)
         {
             await _chamadosServices.Atualizar(id, chamadoCreateDTO);
-            return Ok();
+            return NoContent();
         }
 
         [HttpDelete("{id:int}")]
