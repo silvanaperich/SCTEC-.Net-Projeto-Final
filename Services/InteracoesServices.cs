@@ -14,7 +14,7 @@ namespace DeskFlow.Api.Services
             _interacoesRepository = interacoesRepository;
         }
 
-        public async Task Atualizar(int id, InteracaoCreateDTO interacaoCreateDTO)
+        private async Task<Interacao> RetornaInteracaoPeloId(int id)
         {
             Interacao interacao = await _interacoesRepository.ObterInteracaoPorId(id);
 
@@ -22,6 +22,13 @@ namespace DeskFlow.Api.Services
             {
                 throw new KeyNotFoundException("Interação não encontrada.");
             }
+
+            return interacao;
+        }
+
+        public async Task Atualizar(int id, InteracaoCreateDTO interacaoCreateDTO)
+        {
+            Interacao interacao = await RetornaInteracaoPeloId(id);
 
             interacao.Atualizar(
                 interacaoCreateDTO.Autor,
@@ -43,7 +50,7 @@ namespace DeskFlow.Api.Services
 
         public async Task Excluir(int id)
         {
-            Interacao interacao = await _interacoesRepository.ObterInteracaoPorId(id);
+            Interacao interacao = await RetornaInteracaoPeloId(id);
 
             if (interacao != null)
             {
@@ -53,12 +60,7 @@ namespace DeskFlow.Api.Services
 
         public async Task<InteracaoComChamadoIdResponseDTO> ObterInteracaoPorId(int id)
         {
-            Interacao interacao = await _interacoesRepository.ObterInteracaoPorId(id);
-
-            if (interacao == null)
-            {
-                return null;
-            }
+            Interacao interacao = await RetornaInteracaoPeloId(id);
 
             return new InteracaoComChamadoIdResponseDTO
             {
