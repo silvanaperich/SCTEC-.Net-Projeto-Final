@@ -4,7 +4,7 @@ namespace DeskFlow.Api.Services.Interfaces
 {
     public interface IInteracoesServices
     {
-        Task Cadastrar(InteracaoComChamadoIdCreateDTO interacaoComChamadoIdCreateDTO);
+        Task<InteracaoComChamadoIdResponseDTO> Cadastrar(InteracaoComChamadoIdCreateDTO interacaoComChamadoIdCreateDTO);
         Task Atualizar(int id, InteracaoCreateDTO interacaoCreateDTO);
         Task Excluir(int id);
         Task<InteracaoComChamadoIdResponseDTO> ObterInteracaoPorId(int id);

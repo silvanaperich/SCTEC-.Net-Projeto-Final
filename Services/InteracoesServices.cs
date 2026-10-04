@@ -40,7 +40,7 @@ namespace DeskFlow.Api.Services
             await _interacoesRepository.Atualizar(interacao);
         }
 
-        public async Task Cadastrar(InteracaoComChamadoIdCreateDTO interacaoComChamadoIdCreateDTO)
+        public async Task<InteracaoComChamadoIdResponseDTO> Cadastrar(InteracaoComChamadoIdCreateDTO interacaoComChamadoIdCreateDTO)
         {
             bool existeChamado = await _chamadosRepository.VerificarExisteChamadoPeloId(interacaoComChamadoIdCreateDTO.ChamadoId);
 
@@ -63,7 +63,17 @@ namespace DeskFlow.Api.Services
                 Mensagem = interacaoComChamadoIdCreateDTO.Mensagem,
                 DataRegistro = DateTime.Now
             };
+            
             await _interacoesRepository.Cadastrar(interacao);
+
+            return new InteracaoComChamadoIdResponseDTO
+            {
+                Id = interacao.Id,
+                ChamadoId = interacao.ChamadoId,
+                Autor = interacao.Autor,
+                Mensagem = interacao.Mensagem,
+                DataRegistro = interacao.DataRegistro
+            }; 
         }
 
         public async Task Excluir(int id)
