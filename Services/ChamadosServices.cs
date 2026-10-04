@@ -45,7 +45,7 @@ namespace DeskFlow.Api.Services
             }
         }
 
-        public async Task AdicionarInteracao(int id, InteracaoCreateDTO interacaoCreateDTO)
+        public async Task<InteracaoResponseDTO> AdicionarInteracao(int id, InteracaoCreateDTO interacaoCreateDTO)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
 
@@ -62,6 +62,14 @@ namespace DeskFlow.Api.Services
                 Mensagem = interacaoCreateDTO.Mensagem
             };
             await _interacoesRepository.Cadastrar(interacao);
+
+            return new InteracaoResponseDTO
+            {
+                Id = interacao.Id,
+                Autor = interacao.Autor,
+                Mensagem = interacao.Mensagem,
+                DataRegistro = interacao.DataRegistro
+            };
         }
 
         public async Task Atualizar(int id, ChamadoCreateDTO chamadoCreateDTO)

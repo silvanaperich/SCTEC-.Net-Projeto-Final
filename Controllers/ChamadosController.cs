@@ -56,8 +56,12 @@ namespace DeskFlow.Api.Controllers
         [HttpPost("{id:int}/interacoes")]
         public async Task<IActionResult> AdicionarInteracao([FromRoute] int id, [FromBody] InteracaoCreateDTO interacaoCreateDTO)
         {
-            await _chamadosServices.AdicionarInteracao(id, interacaoCreateDTO);
-            return Ok();
+            InteracaoResponseDTO interacaoResponseDTO = await _chamadosServices.AdicionarInteracao(id, interacaoCreateDTO);
+            return CreatedAtAction(
+                nameof(InteracoesController.ObterInteracaoPorId),
+                "Interacoes",
+                new {id = interacaoResponseDTO.Id},
+                interacaoResponseDTO);
         }
 
         [HttpPut("{id:int}")]

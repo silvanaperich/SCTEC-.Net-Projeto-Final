@@ -12,6 +12,6 @@ namespace DeskFlow.Api.Services.Interfaces
         Task<List<ChamadoResponseDTO>> ObterChamados(string status, string prioridade, int? categoriaId);
         Task IniciarAtendimento(int id);
         Task EncerrarAtendimento(int id, ChamadoEncerradoUpdateDTO chamadoEncerradoUpdateDTO);
-        Task AdicionarInteracao(int id, InteracaoCreateDTO interacaoCreateDTO);
+        Task<InteracaoResponseDTO> AdicionarInteracao(int id, InteracaoCreateDTO interacaoCreateDTO);
     }
 }
