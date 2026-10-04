@@ -79,11 +79,7 @@ namespace DeskFlow.Api.Services
         public async Task Excluir(int id)
         {
             Interacao interacao = await RetornaInteracaoPeloId(id);
-
-            if (interacao != null)
-            {
-                await _interacoesRepository.Excluir(interacao);
-            }
+            await _interacoesRepository.Excluir(interacao);
         }
 
         public async Task<InteracaoComChamadoIdResponseDTO> ObterInteracaoPorId(int id)

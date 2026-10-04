@@ -67,12 +67,13 @@ namespace DeskFlow.Api.Services
         public async Task Atualizar(int id, ChamadoCreateDTO chamadoCreateDTO)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
-            await VerificarCategoriaExiste(chamadoCreateDTO.CategoriaId);
 
             if (chamado.Status == StatusChamado.Fechado)
             {
                 throw new RegrasException("Chamado está fechado, não é possível alterar os dados.");
             }
+
+            await VerificarCategoriaExiste(chamadoCreateDTO.CategoriaId);
 
             chamado.Atualizar(
                 chamadoCreateDTO.Titulo, 
@@ -131,11 +132,7 @@ namespace DeskFlow.Api.Services
         public async Task Excluir(int id)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
-
-            if (chamado != null)
-            {
-                await _chamadosRepository.Excluir(chamado);
-            }
+            await _chamadosRepository.Excluir(chamado);
         }
 
         public async Task IniciarAtendimento(int id)

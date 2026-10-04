@@ -51,17 +51,14 @@ namespace DeskFlow.Api.Services
         {
             Categoria categoria = await RetornarCategoriaPorId(id);
 
-            if (categoria != null)
+            bool possuiChamados = await _chamadosRepository.VerificarExistemChamadosPorCategoriaId(id);
+
+            if (possuiChamados)
             {
-                bool possuiChamados = await _chamadosRepository.VerificarExistemChamadosPorCategoriaId(id);
-
-                if (possuiChamados)
-                {
-                    throw new RegrasException("Categoria possui chamados vinculados, não pode ser excluída.");
-                }
-
-                await _categoriasRepository.Excluir(categoria);
+                throw new RegrasException("Categoria possui chamados vinculados, não pode ser excluída.");
             }
+
+            await _categoriasRepository.Excluir(categoria);
         }
 
         public async Task<CategoriaResponseDTO> ObterCategoriaPorId(int id)
