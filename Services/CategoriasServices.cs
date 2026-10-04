@@ -16,7 +16,8 @@ namespace DeskFlow.Api.Services
             _categoriasRepository = categoriasRespository;
             _chamadosRepository = chamadosRepository;
         }
-        public async Task Atualizar(int id, CategoriaCreateDTO categoriaCreateDTO)
+
+        private async Task<Categoria> RetornarCategoriaPorId(int id)
         {
             Categoria categoria = await _categoriasRepository.ObterCategoriaPorId(id);
 
@@ -24,6 +25,13 @@ namespace DeskFlow.Api.Services
             {
                 throw new KeyNotFoundException("Categoria não encontrada.");
             }
+
+            return categoria;
+        }
+
+        public async Task Atualizar(int id, CategoriaCreateDTO categoriaCreateDTO)
+        {
+            Categoria categoria = await RetornarCategoriaPorId(id);
             categoria.Atualizar(categoriaCreateDTO.Nome);
             await _categoriasRepository.Atualizar(categoria);
         }
@@ -36,7 +44,7 @@ namespace DeskFlow.Api.Services
 
         public async Task Excluir(int id)
         {
-            Categoria categoria = await _categoriasRepository.ObterCategoriaPorId(id);
+            Categoria categoria = await RetornarCategoriaPorId(id);
 
             if (categoria != null)
             {
@@ -53,12 +61,7 @@ namespace DeskFlow.Api.Services
 
         public async Task<CategoriaResponseDTO> ObterCategoriaPorId(int id)
         {
-            Categoria categoria = await _categoriasRepository.ObterCategoriaPorId(id);
-
-            if (categoria == null)
-            {
-                return null;
-            }
+            Categoria categoria = await RetornarCategoriaPorId(id);
 
             return new CategoriaResponseDTO
             {
