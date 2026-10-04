@@ -8,7 +8,7 @@ namespace DeskFlow.Api.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("chamados")]
+    [Route("api/chamados")]
     public class ChamadosController : ControllerBase
     {
         private IChamadosServices _chamadosServices;

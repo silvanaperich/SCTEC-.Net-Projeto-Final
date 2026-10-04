@@ -7,7 +7,7 @@ namespace DeskFlow.Api.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("interacoes")]
+    [Route("api/interacoes")]
     public class InteracoesController : ControllerBase
     {
         private IInteracoesServices _interacoesServices;

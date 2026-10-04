@@ -7,7 +7,7 @@ namespace DeskFlow.Api.Controllers
 {
     [Authorize]
     [ApiController]
-    [Route("categorias")]
+    [Route("api/categorias")]
     public class CategoriasController : ControllerBase
     {
         private ICategoriasServices _categoriasServices;
