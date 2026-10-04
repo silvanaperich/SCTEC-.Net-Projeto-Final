@@ -71,7 +71,7 @@ namespace DeskFlow.Api.Controllers
         public async Task<IActionResult> Excluir([FromRoute] int id)
         {
             await _chamadosServices.Excluir(id);
-            return Ok();
+            return NoContent();
         }
     }
 }

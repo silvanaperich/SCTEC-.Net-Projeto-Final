@@ -49,7 +49,7 @@ namespace DeskFlow.Api.Controllers
         public async Task<IActionResult> Excluir([FromRoute] int id)
         {
             await _interacoesServices.Excluir(id);
-            return Ok();
+            return NoContent();
         }
     }
 }
