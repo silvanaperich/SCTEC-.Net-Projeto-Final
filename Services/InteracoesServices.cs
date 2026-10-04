@@ -1,5 +1,6 @@
 using DeskFlow.Api.DTOs.Interacoes;
 using DeskFlow.Api.Models.Entities;
+using DeskFlow.Api.Models.Enums;
 using DeskFlow.Api.Repositories.Interfaces;
 using DeskFlow.Api.Services.Interfaces;
 
@@ -8,10 +9,12 @@ namespace DeskFlow.Api.Services
     public class InteracoesServices : IInteracoesServices
     {
         private IInteracoesRepository _interacoesRepository;
+        private IChamadosRepository _chamadosRepository;
 
-        public InteracoesServices(IInteracoesRepository interacoesRepository)
+        public InteracoesServices(IInteracoesRepository interacoesRepository, IChamadosRepository chamadosRepository)
         {
             _interacoesRepository = interacoesRepository;
+            _chamadosRepository = chamadosRepository;
         }
 
         private async Task<Interacao> RetornaInteracaoPeloId(int id)
@@ -38,6 +41,20 @@ namespace DeskFlow.Api.Services
 
         public async Task Cadastrar(InteracaoComChamadoIdCreateDTO interacaoComChamadoIdCreateDTO)
         {
+            bool existeChamado = await _chamadosRepository.VerificarExisteChamadoPeloId(interacaoComChamadoIdCreateDTO.ChamadoId);
+
+            if (!existeChamado)
+            {
+                throw new KeyNotFoundException("Chamado não encontrado para adicionar a interação.");
+            }
+
+            StatusChamado statusChamado = await _chamadosRepository.RetornarStatusDoChamado(interacaoComChamadoIdCreateDTO.ChamadoId);
+
+            if (statusChamado == StatusChamado.Fechado)
+            {
+                throw new KeyNotFoundException("Chamado está fechado, não é possível adicionar interações.");
+            }
+
             Interacao interacao = new Interacao
             {
                 ChamadoId = interacaoComChamadoIdCreateDTO.ChamadoId,

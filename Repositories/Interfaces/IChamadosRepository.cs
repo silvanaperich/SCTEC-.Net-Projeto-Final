@@ -11,5 +11,7 @@ namespace DeskFlow.Api.Repositories.Interfaces
         Task<Chamado> ObterChamadoPorId(int id);
         Task<List<Chamado>> ObterChamados(StatusChamado? status, PrioridadeChamado? prioridade, int? categoriaId);
         Task<bool> VerificarExistemChamadosPorCategoriaId(int categoriaId);
+        Task<bool> VerificarExisteChamadoPeloId(int id);
+        Task<StatusChamado> RetornarStatusDoChamado(int id);
     }
 }

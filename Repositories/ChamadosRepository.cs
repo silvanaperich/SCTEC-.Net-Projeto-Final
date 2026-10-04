@@ -3,7 +3,6 @@ using DeskFlow.Api.Models.Entities;
 using DeskFlow.Api.Models.Enums;
 using DeskFlow.Api.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.IdentityModel.Tokens;
 
 namespace DeskFlow.Api.Repositories
 {
@@ -65,6 +64,19 @@ namespace DeskFlow.Api.Repositories
                 .Include(c => c.Categoria)
                 .Include(c => c.Interacoes)
                 .ToListAsync();
+        }
+
+        public async Task<StatusChamado> RetornarStatusDoChamado(int id)
+        {
+            return await _context.Chamados
+                .Where(ch => ch.Id == id)
+                .Select(ch => ch.Status)
+                .FirstOrDefaultAsync();
+        }
+
+        public async Task<bool> VerificarExisteChamadoPeloId(int id)
+        {
+            return await _context.Chamados.AnyAsync(ch => ch.Id == id);
         }
 
         public async Task<bool> VerificarExistemChamadosPorCategoriaId(int categoriaId)
