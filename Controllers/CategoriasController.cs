@@ -34,8 +34,8 @@ namespace DeskFlow.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Cadastrar([FromBody] CategoriaCreateDTO categoriaCreateDTO)
         {
-            await _categoriasServices.Cadastrar(categoriaCreateDTO);
-            return Created("/categorias", categoriaCreateDTO);
+            CategoriaResponseDTO categoriaResponseDTO = await _categoriasServices.Cadastrar(categoriaCreateDTO);
+            return CreatedAtAction(nameof(ObterCategoriaPorId), new {id = categoriaResponseDTO.Id}, categoriaResponseDTO);
         }
 
         [HttpPut("{id:int}")]

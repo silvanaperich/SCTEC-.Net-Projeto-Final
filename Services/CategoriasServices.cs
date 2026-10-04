@@ -36,10 +36,15 @@ namespace DeskFlow.Api.Services
             await _categoriasRepository.Atualizar(categoria);
         }
 
-        public async Task Cadastrar(CategoriaCreateDTO categoriaCreateDTO)
+        public async Task<CategoriaResponseDTO> Cadastrar(CategoriaCreateDTO categoriaCreateDTO)
         {
             Categoria categoria = new Categoria {Nome = categoriaCreateDTO.Nome};
             await _categoriasRepository.Cadastrar(categoria);
+            return new CategoriaResponseDTO
+            {
+                Id = categoria.Id, 
+                Nome = categoria.Nome
+            };
         }
 
         public async Task Excluir(int id)

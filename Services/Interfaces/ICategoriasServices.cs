@@ -4,7 +4,7 @@ namespace DeskFlow.Api.Services.Interfaces
 {
     public interface ICategoriasServices
     {
-        Task Cadastrar(CategoriaCreateDTO categoriaCreateDTO);
+        Task<CategoriaResponseDTO> Cadastrar(CategoriaCreateDTO categoriaCreateDTO);
         Task Atualizar(int id, CategoriaCreateDTO categoriaCreateDTO);
         Task Excluir(int id);
         Task<CategoriaResponseDTO> ObterCategoriaPorId(int id);
