@@ -40,5 +40,10 @@ namespace DeskFlow.Api.Repositories
         {
             return await _context.Categorias.ToListAsync();
         }
+        
+        public async Task<bool> VerificarExisteCategoriaPeloId(int id)
+        {
+            return await _context.Categorias.AnyAsync(ch => ch.Id == id);
+        }
     }
 }

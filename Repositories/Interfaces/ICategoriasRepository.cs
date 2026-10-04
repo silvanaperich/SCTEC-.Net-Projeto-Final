@@ -9,5 +9,6 @@ namespace DeskFlow.Api.Repositories.Interfaces
         Task Excluir(Categoria categoria);
         Task<Categoria> ObterCategoriaPorId(int id);
         Task<List<Categoria>> ObterTodas();
+        Task<bool> VerificarExisteCategoriaPeloId(int id);
     }
 }

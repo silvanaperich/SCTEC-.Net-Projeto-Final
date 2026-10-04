@@ -14,11 +14,13 @@ namespace DeskFlow.Api.Services
     {
         private IChamadosRepository _chamadosRepository;
         private IInteracoesRepository _interacoesRepository;
+        private ICategoriasRespository _categoriasRepository;
 
-        public ChamadosServices(IChamadosRepository chamadosRepository, IInteracoesRepository interacoesRepository)
+        public ChamadosServices(IChamadosRepository chamadosRepository, IInteracoesRepository interacoesRepository, ICategoriasRespository categoriasRespository)
         {
             _chamadosRepository = chamadosRepository;
             _interacoesRepository = interacoesRepository;
+            _categoriasRepository = categoriasRespository;
         }
 
         private async Task<Chamado> RetornarChamadoPeloId(int id)
@@ -66,6 +68,13 @@ namespace DeskFlow.Api.Services
 
         public async Task Cadastrar(ChamadoCreateDTO chamadoCreateDTO)
         {
+            bool existeCategoria = await _categoriasRepository.VerificarExisteCategoriaPeloId(chamadoCreateDTO.CategoriaId);
+
+            if (!existeCategoria)
+            {
+                throw new KeyNotFoundException("Categoria não encontrada.");
+            }
+
             Chamado chamado = new Chamado
             {
                 Titulo = chamadoCreateDTO.Titulo,
