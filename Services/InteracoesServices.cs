@@ -1,4 +1,5 @@
 using DeskFlow.Api.DTOs.Interacoes;
+using DeskFlow.Api.Exceptions;
 using DeskFlow.Api.Models.Entities;
 using DeskFlow.Api.Models.Enums;
 using DeskFlow.Api.Repositories.Interfaces;
@@ -52,7 +53,7 @@ namespace DeskFlow.Api.Services
 
             if (statusChamado == StatusChamado.Fechado)
             {
-                throw new KeyNotFoundException("Chamado está fechado, não é possível adicionar interações.");
+                throw new RegrasException("Chamado está fechado, não é possível adicionar interações.");
             }
 
             Interacao interacao = new Interacao
