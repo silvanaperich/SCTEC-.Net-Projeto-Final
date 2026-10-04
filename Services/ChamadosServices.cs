@@ -88,6 +88,16 @@ namespace DeskFlow.Api.Services
                 throw new RegrasException("Necessário informar a solução para o encerramento do chamado.");
             }
 
+            if (chamado.Status == StatusChamado.Fechado)
+            {
+                throw new RegrasException("Chamado já se encontra no status 'Fechado'.");
+            }
+
+            if (chamado.Status == StatusChamado.Aberto)
+            {
+                throw new RegrasException("Chamado está com status 'Aberto'. Deve ser movimentado para 'EmAndamento' e após para 'Fechado'");
+            }
+
             chamado.Solucao = chamadoEncerradoUpdateDTO.Solucao;
             chamado.Status = StatusChamado.Fechado;
             chamado.DataFechamento = DateTime.Now;
