@@ -83,7 +83,7 @@ namespace DeskFlow.Api.Services
             await _chamadosRepository.Atualizar(chamado);
         }
 
-        public async Task Cadastrar(ChamadoCreateDTO chamadoCreateDTO)
+        public async Task<ChamadoResponseDTO> Cadastrar(ChamadoCreateDTO chamadoCreateDTO)
         {
             await VerificarCategoriaExiste(chamadoCreateDTO.CategoriaId);
 
@@ -97,7 +97,10 @@ namespace DeskFlow.Api.Services
                 DataAbertura = DateTime.Now,
                 Status = StatusChamado.Aberto
             };
+
             await _chamadosRepository.Cadastrar(chamado);
+
+            return await ObterChamadoPorId(chamado.Id);
         }
 
         public async Task EncerrarAtendimento(int id, ChamadoEncerradoUpdateDTO chamadoEncerradoUpdateDTO)

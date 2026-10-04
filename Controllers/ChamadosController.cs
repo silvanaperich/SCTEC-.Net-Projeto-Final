@@ -35,8 +35,8 @@ namespace DeskFlow.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> Cadastrar([FromBody] ChamadoCreateDTO chamadoCreateDTO)
         {
-            await _chamadosServices.Cadastrar(chamadoCreateDTO);
-            return Created("/chamados", chamadoCreateDTO);
+            ChamadoResponseDTO chamadoResponseDTO = await _chamadosServices.Cadastrar(chamadoCreateDTO);
+            return CreatedAtAction(nameof(ObterChamadoPorId), new {id = chamadoResponseDTO.Id}, chamadoResponseDTO);
         }
 
         [HttpPost("{id:int}/iniciar")]
