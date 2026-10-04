@@ -2,7 +2,7 @@ using DeskFlow.Api.Models.Entities;
 
 namespace DeskFlow.Api.Repositories.Interfaces
 {
-    public interface ICategoriasRespository
+    public interface ICategoriasRepository
     {
         Task Cadastrar(Categoria categoria);
         Task Atualizar(Categoria categoria);

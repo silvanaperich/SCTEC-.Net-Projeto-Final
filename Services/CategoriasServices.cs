@@ -8,12 +8,12 @@ namespace DeskFlow.Api.Services
 {
     public class CategoriasServices : ICategoriasServices
     {
-        private ICategoriasRespository _categoriasRepository;
+        private ICategoriasRepository _categoriasRepository;
         private IChamadosRepository _chamadosRepository;
 
-        public CategoriasServices(ICategoriasRespository categoriasRespository, IChamadosRepository chamadosRepository)
+        public CategoriasServices(ICategoriasRepository categoriasRepository, IChamadosRepository chamadosRepository)
         {
-            _categoriasRepository = categoriasRespository;
+            _categoriasRepository = categoriasRepository;
             _chamadosRepository = chamadosRepository;
         }
 

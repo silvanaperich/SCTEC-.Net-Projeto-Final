@@ -26,8 +26,6 @@ namespace DeskFlow.Api.Models.Entities
             this.Prioridade = prioridade;
             this.SolicitanteNome = solicitanteNome;
             this.CategoriaId = categoriaId;
-            this.DataAbertura = DateTime.Now;
-            this.Status = StatusChamado.Aberto;
         }
     }
 }

@@ -14,13 +14,13 @@ namespace DeskFlow.Api.Services
     {
         private IChamadosRepository _chamadosRepository;
         private IInteracoesRepository _interacoesRepository;
-        private ICategoriasRespository _categoriasRepository;
+        private ICategoriasRepository _categoriasRepository;
 
-        public ChamadosServices(IChamadosRepository chamadosRepository, IInteracoesRepository interacoesRepository, ICategoriasRespository categoriasRespository)
+        public ChamadosServices(IChamadosRepository chamadosRepository, IInteracoesRepository interacoesRepository, ICategoriasRepository categoriasRepository)
         {
             _chamadosRepository = chamadosRepository;
             _interacoesRepository = interacoesRepository;
-            _categoriasRepository = categoriasRespository;
+            _categoriasRepository = categoriasRepository;
         }
 
         private async Task<Chamado> RetornarChamadoPeloId(int id)

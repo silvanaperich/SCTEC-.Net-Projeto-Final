@@ -64,7 +64,7 @@ builder.Services.AddScoped<ICategoriasServices, CategoriasServices>();
 builder.Services.AddScoped<IChamadosServices, ChamadosServices>();
 builder.Services.AddScoped<IInteracoesServices, InteracoesServices>();
 
-builder.Services.AddScoped<ICategoriasRespository, CategoriasRepository>();
+builder.Services.AddScoped<ICategoriasRepository, CategoriasRepository>();
 builder.Services.AddScoped<IChamadosRepository, ChamadosRepository>();
 builder.Services.AddScoped<IInteracoesRepository, InteracoesRepository>();
 

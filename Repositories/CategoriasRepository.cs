@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace DeskFlow.Api.Repositories
 {
-    public class CategoriasRepository : ICategoriasRespository
+    public class CategoriasRepository : ICategoriasRepository
     {
         private AppDbContext _context;
 
