@@ -106,7 +106,7 @@ namespace DeskFlow.Api.Services
 
         public async Task Excluir(int id)
         {
-            Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
+            Chamado chamado = await RetornarChamadoPeloId(id);
 
             if (chamado != null)
             {
@@ -129,12 +129,7 @@ namespace DeskFlow.Api.Services
 
         public async Task<ChamadoResponseDTO> ObterChamadoPorId(int id)
         {
-            Chamado chamado = await _chamadosRepository.ObterChamadoPorId(id);
-
-            if (chamado == null)
-            {
-                return null;
-            }
+            Chamado chamado = await RetornarChamadoPeloId(id);
 
             return new ChamadoResponseDTO
             {
