@@ -28,10 +28,10 @@ git clone https://github.com/silvanaperich/SCTEC-.Net-Projeto-Final.git
 cd SCTEC-.Net-Projeto-Final
 ````
 
-3. Configure a Connection String no arquivo `appsettings.json`: 
+3. Configure a Connection String no arquivo `appsettings.json`, exemplo: 
 ````
 "ConnectionStrings": { 
-"DefaultConnection": "Server=localhost;Database=DeskFlowDb;Trusted_Connection=True;TrustServerCertificate=True;" 
+"DefaultConnection": "Data Source=localhost\\SQLEXPRESS;Integrated Security=True;Encrypt=False;Trust Server Certificate=True;Database=dbDeskFlow;" 
 } 
 ````
 Observação: se preferir, altere o nome do banco ou ajuste a string de conexão conforme a necessidade do seu ambiente.
@@ -48,7 +48,7 @@ dotnet run
 
 6. Acesse a documentação do Swagger para testar os endpoints, adicionando `/swagger` no final da url, exemplo: 
 ````
-https://localhost:7000/swagger 
+http://localhost:5103/swagger 
 ````
 
 ## Autenticação
@@ -81,4 +81,4 @@ https://localhost:7000/swagger
 - **Middlewares**: Tratamento de erros globais da API.
 
 ##  Segurança e Autenticação
-- **ASP.NET Core Identity**: validação de Tokens JWT. 
+- **ASP.NET Core Identity**: gerenciamento de logins, geração e validação de Tokens. 
