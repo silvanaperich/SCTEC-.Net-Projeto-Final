@@ -35,6 +35,16 @@ namespace DeskFlow.Api.Services
             return chamado;
         }
 
+        private async Task VerificarCategoriaExiste(int categoriaId)
+        {
+            bool existeCategoria = await _categoriasRepository.VerificarExisteCategoriaPeloId(categoriaId);
+
+            if (!existeCategoria)
+            {
+                throw new KeyNotFoundException("Categoria não encontrada.");
+            }
+        }
+
         public async Task AdicionarInteracao(int id, InteracaoCreateDTO interacaoCreateDTO)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
@@ -57,6 +67,13 @@ namespace DeskFlow.Api.Services
         public async Task Atualizar(int id, ChamadoCreateDTO chamadoCreateDTO)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
+            await VerificarCategoriaExiste(chamadoCreateDTO.CategoriaId);
+
+            if (chamado.Status == StatusChamado.Fechado)
+            {
+                throw new RegrasException("Chamado está fechado, não é possível alterar os dados.");
+            }
+
             chamado.Atualizar(
                 chamadoCreateDTO.Titulo, 
                 chamadoCreateDTO.Descricao,
@@ -68,12 +85,7 @@ namespace DeskFlow.Api.Services
 
         public async Task Cadastrar(ChamadoCreateDTO chamadoCreateDTO)
         {
-            bool existeCategoria = await _categoriasRepository.VerificarExisteCategoriaPeloId(chamadoCreateDTO.CategoriaId);
-
-            if (!existeCategoria)
-            {
-                throw new KeyNotFoundException("Categoria não encontrada.");
-            }
+            await VerificarCategoriaExiste(chamadoCreateDTO.CategoriaId);
 
             Chamado chamado = new Chamado
             {
@@ -130,6 +142,11 @@ namespace DeskFlow.Api.Services
             if (chamado.Status == StatusChamado.Fechado)
             {
                 throw new RegrasException("Chamado está fechado, não é possível alterar o status para 'EmAndamento'.");
+            }
+
+            if (chamado.Status == StatusChamado.EmAndamento)
+            {
+                throw new RegrasException("Chamado já está EmAndamento.");
             }
 
             chamado.Status = StatusChamado.EmAndamento;
