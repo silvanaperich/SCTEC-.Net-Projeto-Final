@@ -107,6 +107,12 @@ namespace DeskFlow.Api.Services
         public async Task IniciarAtendimento(int id)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
+
+            if (chamado.Status == StatusChamado.Fechado)
+            {
+                throw new RegrasException("Chamado está fechado, não é possível alterar o status para 'EmAndamento'.");
+            }
+
             chamado.Status = StatusChamado.EmAndamento;
             await _chamadosRepository.Atualizar(chamado);
         }
