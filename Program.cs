@@ -1,4 +1,5 @@
 using DeskFlow.Api.Data;
+using DeskFlow.Api.DTOs.Erros;
 using DeskFlow.Api.Middlewares;
 using DeskFlow.Api.Repositories;
 using DeskFlow.Api.Repositories.Interfaces;
@@ -6,6 +7,7 @@ using DeskFlow.Api.Services;
 using DeskFlow.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi;
 
@@ -50,6 +52,16 @@ string connection = builder.Configuration.GetConnectionString("DefaultConnection
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
 
 builder.Services.AddControllers()
+    .ConfigureApiBehaviorOptions(options =>
+    {
+        options.InvalidModelStateResponseFactory = ctx =>
+        {
+            var mensagens = ctx.ModelState.Values
+                .SelectMany(v => v.Errors)
+                .Select(e => e.ErrorMessage);
+            return new BadRequestObjectResult(new ErrorResponseDTO(string.Join(" ", mensagens)));
+        };
+    })
     .AddJsonOptions(options =>
     {
         options.JsonSerializerOptions.ReferenceHandler = System.Text.Json.Serialization.ReferenceHandler.IgnoreCycles;
