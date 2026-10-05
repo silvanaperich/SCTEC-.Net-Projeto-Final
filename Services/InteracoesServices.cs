@@ -83,20 +83,6 @@ namespace DeskFlow.Api.Services
             }; 
         }
 
-        public async Task Excluir(int id)
-        {
-            Interacao interacao = await RetornaInteracaoPeloId(id);
-            
-            StatusChamado statusChamado = await _chamadosRepository.RetornarStatusDoChamado(interacao.ChamadoId);
-
-            if (statusChamado == StatusChamado.Fechado)
-            {
-                throw new RegrasException("Chamado está fechado, não é possível excluir a interação.");
-            }
-
-            await _interacoesRepository.Excluir(interacao);
-        }
-
         public async Task<InteracaoComChamadoIdResponseDTO> ObterInteracaoPorId(int id)
         {
             Interacao interacao = await RetornaInteracaoPeloId(id);

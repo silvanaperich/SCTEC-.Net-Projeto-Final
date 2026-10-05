@@ -26,12 +26,6 @@ namespace DeskFlow.Api.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task Excluir(Interacao interacao)
-        {
-            _context.Interacoes.Remove(interacao);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<Interacao> ObterInteracaoPorId(int id) => await _context.Interacoes.FindAsync(id);
 
         public async Task<List<Interacao>> ObterTodas() => await _context.Interacoes.ToListAsync();

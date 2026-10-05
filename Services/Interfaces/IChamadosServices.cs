@@ -7,7 +7,6 @@ namespace DeskFlow.Api.Services.Interfaces
     {
         Task<ChamadoResponseDTO> Cadastrar(ChamadoCreateDTO chamadoCreateDTO);
         Task Atualizar(int id, ChamadoCreateDTO chamadoCreateDTO);
-        Task Excluir(int id);
         Task<ChamadoResponseDTO> ObterChamadoPorId(int id);
         Task<List<ChamadoResponseDTO>> ObterChamados(string status, string prioridade, int? categoriaId);
         Task IniciarAtendimento(int id);

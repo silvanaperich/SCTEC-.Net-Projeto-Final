@@ -136,12 +136,6 @@ namespace DeskFlow.Api.Services
             await _chamadosRepository.Atualizar(chamado);
         }
 
-        public async Task Excluir(int id)
-        {
-            Chamado chamado = await RetornarChamadoPeloId(id);
-            await _chamadosRepository.Excluir(chamado);
-        }
-
         public async Task IniciarAtendimento(int id)
         {
             Chamado chamado = await RetornarChamadoPeloId(id);

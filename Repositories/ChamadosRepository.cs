@@ -27,12 +27,6 @@ namespace DeskFlow.Api.Repositories
             await _context.SaveChangesAsync();
         }
 
-        public async Task Excluir(Chamado chamado)
-        {
-            _context.Chamados.Remove(chamado);
-            await _context.SaveChangesAsync();
-        }
-
         public async Task<Chamado> ObterChamadoPorId(int id)
         {
             return await _context.Chamados

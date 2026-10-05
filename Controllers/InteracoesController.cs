@@ -44,12 +44,5 @@ namespace DeskFlow.Api.Controllers
             await _interacoesServices.Atualizar(id, interacaoCreateDTO);
             return NoContent();
         }
-
-        [HttpDelete("{id:int}")]
-        public async Task<IActionResult> Excluir([FromRoute] int id)
-        {
-            await _interacoesServices.Excluir(id);
-            return NoContent();
-        }
     }
 }

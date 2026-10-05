@@ -7,7 +7,6 @@ namespace DeskFlow.Api.Repositories.Interfaces
     {
         Task Cadastrar(Chamado chamado);
         Task Atualizar(Chamado chamado);
-        Task Excluir(Chamado chamado);
         Task<Chamado> ObterChamadoPorId(int id);
         Task<List<Chamado>> ObterChamados(StatusChamado? status, PrioridadeChamado? prioridade, int? categoriaId);
         Task<bool> VerificarExistemChamadosPorCategoriaId(int categoriaId);
