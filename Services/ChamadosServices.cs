@@ -6,7 +6,6 @@ using DeskFlow.Api.Models.Entities;
 using DeskFlow.Api.Models.Enums;
 using DeskFlow.Api.Repositories.Interfaces;
 using DeskFlow.Api.Services.Interfaces;
-using Microsoft.IdentityModel.Tokens;
 
 namespace DeskFlow.Api.Services
 {
@@ -116,7 +115,7 @@ namespace DeskFlow.Api.Services
         {
             Chamado chamado = await RetornarChamadoPeloId(id);
 
-            if (chamadoEncerradoUpdateDTO.Solucao.IsNullOrEmpty())
+            if (string.IsNullOrWhiteSpace(chamadoEncerradoUpdateDTO.Solucao))
             {
                 throw new RegrasException("Necessário informar a solução para o encerramento do chamado.");
             }
@@ -197,7 +196,7 @@ namespace DeskFlow.Api.Services
             StatusChamado? statusEnum = null;
             PrioridadeChamado? prioridadeEnum = null;
 
-            if (!status.IsNullOrEmpty())
+            if (!string.IsNullOrWhiteSpace(status))
             {
                 if (!Enum.TryParse<StatusChamado>(status, ignoreCase: true, out var statusEnumChecado))
                 {
@@ -206,7 +205,7 @@ namespace DeskFlow.Api.Services
                 statusEnum = statusEnumChecado;
             }
 
-            if (!prioridade.IsNullOrEmpty())
+            if (!string.IsNullOrWhiteSpace(prioridade))
             {
                 if (!Enum.TryParse<PrioridadeChamado>(prioridade, ignoreCase: true, out var prioridadeEnumChecado))
                 {
