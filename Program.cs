@@ -56,10 +56,22 @@ builder.Services.AddControllers()
     {
         options.InvalidModelStateResponseFactory = ctx =>
         {
-            var mensagens = ctx.ModelState.Values
+            var erros = ctx.ModelState.Values
                 .SelectMany(v => v.Errors)
-                .Select(e => e.ErrorMessage);
-            return new BadRequestObjectResult(new ErrorResponseDTO(string.Join(" ", mensagens)));
+                .Select(e => e.ErrorMessage)
+                .ToList();
+
+            bool erroDeJson = erros.Any(m =>
+                string.IsNullOrWhiteSpace(m) ||
+                m.Contains("JSON") ||
+                m.Contains("Path:") ||
+                m.Contains("field is required"));
+
+            string mensagem = erroDeJson
+                ? "Corpo da requisição inválido. Verifique o formato do JSON e os valores informados."
+                : string.Join(" ", erros);
+
+            return new BadRequestObjectResult(new ErrorResponseDTO(mensagem));
         };
     })
     .AddJsonOptions(options =>
