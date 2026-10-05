@@ -76,7 +76,6 @@ http://localhost:5103/swagger
 | POST | `/api/chamados/{id}/encerrar` | `EmAndamento` → `Fechado` (exige `solucao`) |
 | POST | `/api/chamados/{id}/interacoes` | Adiciona comentário (não aceita chamado `Fechado`) |
 | PUT | `/api/chamados/{id}` | Altera os dados do chamado (não aceita chamado `Fechado`) |
-| DELETE | `/api/chamados/{id}` | Exclui o chamado |
 
 ### Interações
 | Método | Rota | Descrição |
@@ -85,7 +84,6 @@ http://localhost:5103/swagger
 | GET | `/api/interacoes/{id}` | Busca uma interação |
 | POST | `/api/interacoes` | Cadastra informando o `chamadoId` (não aceita chamado `Fechado`) |
 | PUT | `/api/interacoes/{id}` | Altera autor e mensagem |
-| DELETE | `/api/interacoes/{id}` | Exclui |
 
 **Valores aceitos:**
 - `prioridade`: `Baixa`, `Media`, `Alta`
