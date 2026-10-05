@@ -1,6 +1,0 @@
-@DeskFlow.API_HostAddress = http://localhost:5103
-
-GET {{DeskFlow.API_HostAddress}}/
-Accept: application/json
-
-###
