@@ -207,3 +207,6 @@ DeskFlow.API/
 
 ##  Segurança e Autenticação
 - **ASP.NET Core Identity**: gerenciamento de logins, geração e validação de Tokens. 
+
+## Vídeo de Apresentação 
+[Clique aqui para assistir ao vídeo de demonstração do projeto](https://drive.google.com/file/d/15KBd1OAZ0GJM1KEcBCRvlyfmfPnBjha9/view?usp=sharing) 
