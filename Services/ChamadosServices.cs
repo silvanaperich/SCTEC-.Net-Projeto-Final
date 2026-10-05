@@ -56,7 +56,7 @@ namespace DeskFlow.Api.Services
             Interacao interacao = new Interacao
             {
                 ChamadoId = id,
-                DataRegistro = DateTime.Now,
+                DataRegistro = DateTime.UtcNow,
                 Autor = interacaoCreateDTO.Autor,
                 Mensagem = interacaoCreateDTO.Mensagem
             };
@@ -102,7 +102,7 @@ namespace DeskFlow.Api.Services
                 Prioridade = chamadoCreateDTO.Prioridade,
                 SolicitanteNome = chamadoCreateDTO.SolicitanteNome,
                 CategoriaId = chamadoCreateDTO.CategoriaId,
-                DataAbertura = DateTime.Now,
+                DataAbertura = DateTime.UtcNow,
                 Status = StatusChamado.Aberto
             };
 
@@ -132,7 +132,7 @@ namespace DeskFlow.Api.Services
 
             chamado.Solucao = chamadoEncerradoUpdateDTO.Solucao;
             chamado.Status = StatusChamado.Fechado;
-            chamado.DataFechamento = DateTime.Now;
+            chamado.DataFechamento = DateTime.UtcNow;
             await _chamadosRepository.Atualizar(chamado);
         }
 

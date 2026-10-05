@@ -61,7 +61,7 @@ namespace DeskFlow.Api.Services
                 ChamadoId = interacaoComChamadoIdCreateDTO.ChamadoId,
                 Autor = interacaoComChamadoIdCreateDTO.Autor,
                 Mensagem = interacaoComChamadoIdCreateDTO.Mensagem,
-                DataRegistro = DateTime.Now
+                DataRegistro = DateTime.UtcNow
             };
             
             await _interacoesRepository.Cadastrar(interacao);
